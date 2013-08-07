@@ -7,12 +7,22 @@ public class Grid {
 	public GridCell grid[][];
 	public final int gridRows = 7;
 	public final int gridCols = 7; 
-	public GridCell winCondition;
+	public GridCell [] winCondition;
+	public int numStones;
 	
 	public Grid () {
 		//initialize grid
 		grid = new GridCell[gridRows][gridCols];
-		winCondition = new GridCell(true, 2, 3, true);
+		winCondition = new GridCell[6];
+		//winCondition[0] = new GridCell(true, 3, 3, true);
+		winCondition[0] = new GridCell(true, 2, 2, true);
+		winCondition[1] = new GridCell(true, 4, 2, true);
+		winCondition[2] = new GridCell(true, 4, 4, true);
+		winCondition[3] = new GridCell(true, 2, 4, true);
+		winCondition[4] = new GridCell(true, 6, 3, true);
+		winCondition[5] = new GridCell(true, 3, 0, true);
+		//winCondition[5] = new GridCell(true, 3, 6, true);
+		numStones = 0;
 	}
 	
 	
@@ -28,10 +38,13 @@ public class Grid {
 				}
 				else if (i == gridRows/2 && j == gridCols/2) {
 					grid[i][j] = new GridCell(true, i, j, false);
-				} else
+				} else {
 					grid[i][j] = new GridCell(true, i, j, true);
+					numStones++;
+				}
 			}
 		}
+		//System.out.println("numstones initialized at: " + numStones);
 		//grid[3][3] = new GridCell(true, 3, 3, true);
 	}
 	
@@ -132,20 +145,27 @@ public class Grid {
 			}
 		}
 		grid[gridmove.destination.row][gridmove.destination.col].hasStone = true;
+		numStones--;
 	}
 	
 	public boolean isWinConditionTrue() {
-		for (int i = 0; i < gridRows; i++) {
+		/*for (int i = 0; i < gridRows; i++) {
 			for (int j = 0; j < gridCols; j++) {
-				if (i != winCondition.row || j != winCondition.col) { //if any other cell than winCondition has stone, false
+				if (i != winCondition[0].row || j != winCondition[0].col) { //if any other cell than winCondition has stone, false
 					if (cellHasStone(grid[i][j])) 
 						return false;
 				}
 			}
+		}*/
+		if (numStones != winCondition.length) {
+				return false;
 		}
-		if (cellHasStone(grid[winCondition.row][winCondition.col])) //the solitary stone
-			return true;
-		return false;
+		for (int i = 0; i < winCondition.length; i++) {
+			if (!cellHasStone(grid[winCondition[i].row][winCondition[i].col])) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	public void undoMove(GridMove gridmove) {
@@ -167,6 +187,7 @@ public class Grid {
 				grid[gridmove.origin.row-1][gridmove.origin.col].hasStone = true;
 			}
 		}
+		numStones++;
 		
 	}
 	
@@ -209,12 +230,12 @@ public class Grid {
 		Stack<Integer> movesCounter = new Stack<Integer> (); //a stack of counters
 		GridMove lastMove = new GridMove(null, null);
 		Integer m;	//m is the current move for a given state (integer)
+		Integer i;
 		
 		while (!isWinConditionTrue()) {
 			allMoves = getAllMoves();
 			//printGrid();
 			//printAllMoves();
-			
 			
 			if (movesCounter.size() == 0) { //nothing added yet)
 				m = 0;
@@ -229,7 +250,7 @@ public class Grid {
 				undoMove(lastMove);
 				
 				movesCounter.pop();
-				Integer i = movesCounter.pop();
+				i = movesCounter.pop();
 				i++;
 				movesCounter.push(i);
 				
@@ -238,18 +259,20 @@ public class Grid {
 				moves.push(lastMove);
 				movesCounter.push(new Integer(0));
 				move(lastMove);
+				//System.out.println("MOVING: " + "["+lastMove.origin.row + "][" + lastMove.origin.col + "] -> [" + lastMove.destination.row + "][" + lastMove.destination.col + "]");
 				numMoves++;
 				
 				if (numMoves % 100000 == 0) {
 					System.out.println("numMoves: " + numMoves);
+					//System.out.println("numStones: " + numStones);
 				}
 			} else { 	//tried all the moves, move up
-				//System.out.println("Out of moves, backing up\n");
+				//System.out.println("Out of moves, backing up.");
 				lastMove = moves.pop();
 				undoMove(lastMove);
-				
+				//System.out.println("UNDOING MOVE: " + "["+lastMove.origin.row + "][" + lastMove.origin.col + "] -> [" + lastMove.destination.row + "][" + lastMove.destination.col + "]\n");
 				movesCounter.pop();
-				Integer i = movesCounter.pop();
+				i = movesCounter.pop();
 				i++;
 				movesCounter.push(i);
 			}
@@ -267,4 +290,5 @@ public class Grid {
 			System.out.println("["+g.origin.row + "][" + g.origin.col + "] -> [" + g.destination.row + "][" + g.destination.col + "]");
 		}
 	}
+	
 }
