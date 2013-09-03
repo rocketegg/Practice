@@ -1,3 +1,4 @@
+package solver.grid;
 
 public class GridMove {
 	public GridCell origin;

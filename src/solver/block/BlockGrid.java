@@ -1,10 +1,13 @@
+package solver.block;
+
 import java.util.ArrayList;
 import java.util.Stack;
+import solver.grid.*;
 
 /**
 * Committed from Git local
 */
-public class Grid {
+public class BlockGrid {
 
 	public GridCell grid[][];
 	public final int gridRows = 7;
@@ -12,7 +15,7 @@ public class Grid {
 	public GridCell [] winCondition;
 	public int numStones;
 	
-	public Grid () {
+	public BlockGrid () {
 		//initialize grid
 		grid = new GridCell[gridRows][gridCols];
 		winCondition = new GridCell[6];

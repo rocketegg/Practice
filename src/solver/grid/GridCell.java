@@ -1,3 +1,5 @@
+package solver.grid;
+
 
 public class GridCell {
 
