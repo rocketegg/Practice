@@ -17,14 +17,14 @@ public class Grid {
 	public Grid () {
 		//initialize grid
 		grid = new GridCell[gridRows][gridCols];
-		winCondition = new GridCell[6];
-		//winCondition[0] = new GridCell(true, 3, 3, true);
-		winCondition[0] = new GridCell(true, 2, 2, true);
+		winCondition = new GridCell[1];
+		winCondition[0] = new GridCell(true, 3, 4, true);
+		/*winCondition[0] = new GridCell(true, 2, 2, true);
 		winCondition[1] = new GridCell(true, 4, 2, true);
 		winCondition[2] = new GridCell(true, 4, 4, true);
 		winCondition[3] = new GridCell(true, 2, 4, true);
 		winCondition[4] = new GridCell(true, 6, 3, true);
-		winCondition[5] = new GridCell(true, 3, 0, true);
+		winCondition[5] = new GridCell(true, 3, 0, true);*/
 		//winCondition[5] = new GridCell(true, 3, 6, true);
 		numStones = 0;
 	}
