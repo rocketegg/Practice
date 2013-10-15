@@ -178,23 +178,31 @@ public class Main {
 		System.out.println("Num nodes: " + b.countNodes());
 		System.out.println("Num levels: " + b.countLevels());
 		
+		for (int x = 0; x < b.countLevels(); x++) {
+			for (int y = x; y < b.countLevels(); y++) {
+				System.out.print(" ");
+			}
+			b.printLevel(x);
+			System.out.println();
+		}
+		
 		/*
 		 * Composition over Inheritance
 		 */
-		InstrumentedHashSet<String> ihs = new InstrumentedHashSet<String>();
+		/*InstrumentedHashSet<String> ihs = new InstrumentedHashSet<String>();
 		ihs.addAll(Arrays.asList("one", "two", "three"));
 		System.out.println(ihs.toString() + " length: " + ihs.getAddCount());
 		
 		CompositionInstrumentedSet<String> cihs = new CompositionInstrumentedSet<String>(new HashSet<String>());
 		cihs.addAll(Arrays.asList("one", "two", "three"));
 		System.out.println(cihs.toString() + " length: " + cihs.getAddCount());
-		
+		*/
 		
 		/*
 		 * Interfaces
 		 */
 		
-		LinkedList<IPest> pests = new LinkedList<IPest>();
+		/*LinkedList<IPest> pests = new LinkedList<IPest>();
 		pests.add(new Fly());
 		pests.add(new Telemarketer());
 		pests.add(new Fly());
@@ -207,7 +215,7 @@ public class Main {
 		int[] l = new int[100];
 		for (int i = 0; i < l.length; i++) {
 			l[i] = Math.round((float) (Math.random()*100));
-		}
+		}*/
 		
 		//IS PERMUTATION
 		/*

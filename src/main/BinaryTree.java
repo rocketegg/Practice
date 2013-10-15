@@ -68,4 +68,38 @@ public class BinaryTree {
 			return right;
 		return left;
 	}
+	
+	/**
+	 * prints the tree like this
+	 *    1
+	 *  2   3
+	 */
+	public void printTree() {
+		
+	}
+	
+	private void printTree(String s, BinaryTree bt) {
+		if (bt != null)
+			printTree(s + "  ", bt.left);
+	}
+	
+	/**
+	 * prints the level of the tree
+	 * 
+	 * @param n
+	 */
+	public void printLevel(int n) {
+		getLevelString(n, 0, "", left);
+		getLevelString(n,0,"", right);
+	}
+	
+	private void getLevelString(int n, int currLevel, String s, BinaryTree bt) {
+		if (n == currLevel) {
+			if (root != null) {
+				System.out.print( " " + root.value + " ");
+			}
+		}
+		getLevelString(n, currLevel + 1, s, left);
+		getLevelString(n, currLevel + 1, s, right);
+	}
 }
