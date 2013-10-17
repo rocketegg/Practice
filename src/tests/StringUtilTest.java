@@ -26,5 +26,19 @@ public class StringUtilTest extends TestCase {
 		}
 		
 	}
+	
+	public void testReverseString() {
+		String s = "the cat came home";
+		assertTrue(StringUtil.reverseWords(s).equals("home came cat the"));
+		
+		s = "i am going to the store";
+		assertTrue(StringUtil.reverseWords(s).equals("store the to going am i"));
+		
+		s = "turn the t.v. on, dude!";
+		assertTrue(StringUtil.reverseWords(s).equals("dude! on, t.v. the turn"));
+		
+		s = "yes i said it because i can";
+		assertTrue(StringUtil.reverseWords(s).equals("can i because it said i yes"));
+	}
 
 }
