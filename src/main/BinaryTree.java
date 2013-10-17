@@ -31,6 +31,19 @@ public class BinaryTree {
 		}
  	}
 	
+	public Node findNode(BinaryTree bt, int value) {
+		if (bt == null) {
+			return null;
+		} else if (bt.root.value == value) {
+			return bt.root;
+		} else {
+			if (bt.root.value < value) 
+				return findNode(bt.right, value);
+			else
+				return findNode(bt.left, value);
+		}
+	}
+	
 	private void insertOkay(Node n) {
 		if (n.value > root.value) {
 			if (right == null) {

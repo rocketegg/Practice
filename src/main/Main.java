@@ -181,8 +181,8 @@ public class Main {
 		b.preOrder();
 		System.out.println("Num nodes: " + b.countNodes());
 		System.out.println("Num levels: " + b.countLevels());
-		System.out.println("Is valid tree?" + b.isValidBinaryTree());
-		b.printTree();
+		//System.out.println("Is valid tree?" + b.isValidBinaryTree());
+		//b.printTree();
 		/*
 		 * Composition over Inheritance
 		 */

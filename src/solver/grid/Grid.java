@@ -6,8 +6,10 @@ import java.util.Stack;
 /**
 * Committed from Git local
 */
-public class Grid {
 
+
+public class Grid {}
+	/*
 	public GridCell grid[][];
 	public final int gridRows = 7;
 	public final int gridCols = 7; 
@@ -19,12 +21,12 @@ public class Grid {
 		grid = new GridCell[gridRows][gridCols];
 		winCondition = new GridCell[1];
 		winCondition[0] = new GridCell(true, 3, 4, true);
-		/*winCondition[0] = new GridCell(true, 2, 2, true);
+		winCondition[0] = new GridCell(true, 2, 2, true);
 		winCondition[1] = new GridCell(true, 4, 2, true);
 		winCondition[2] = new GridCell(true, 4, 4, true);
 		winCondition[3] = new GridCell(true, 2, 4, true);
 		winCondition[4] = new GridCell(true, 6, 3, true);
-		winCondition[5] = new GridCell(true, 3, 0, true);*/
+		winCondition[5] = new GridCell(true, 3, 0, true);
 		//winCondition[5] = new GridCell(true, 3, 6, true);
 		numStones = 0;
 	}
@@ -151,16 +153,10 @@ public class Grid {
 		grid[gridmove.destination.row][gridmove.destination.col].hasStone = true;
 		numStones--;
 	}
-	
+
+
 	public boolean isWinConditionTrue() {
-		/*for (int i = 0; i < gridRows; i++) {
-			for (int j = 0; j < gridCols; j++) {
-				if (i != winCondition[0].row || j != winCondition[0].col) { //if any other cell than winCondition has stone, false
-					if (cellHasStone(grid[i][j])) 
-						return false;
-				}
-			}
-		}*/
+
 		if (numStones != winCondition.length) {
 				return false;
 		}
@@ -296,3 +292,4 @@ public class Grid {
 	}
 	
 }
+*/
