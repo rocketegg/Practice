@@ -19,6 +19,7 @@ public class StringUtil {
 	}
 	
 	/**
+<<<<<<< HEAD
 	 * Reverses the order of words in a string in place (w/o extra memory)
 	 * E.g. "the cat came home" = "home came cat the"
 	 *   - naive approach would be to break words apart by string.split, then 
@@ -65,4 +66,30 @@ public class StringUtil {
 		//System.out.println("Reversed:" + c);
 		return new String(c);
 	}
+=======
+	 * Function that determines whether string s1 is a substring of string s2
+	 * @param s1
+	 * @param s2
+	 * @return
+	 */
+	public static boolean isSubstring(String s1, String s2) {
+		int s1_ptr = 0;
+		int s2_ptr = 0;
+		while (s2_ptr < s2.length()) {
+			if (s2.charAt(s2_ptr) == s1.charAt(s1_ptr)) {
+				s1_ptr++;
+				s2_ptr++;
+				if (s1_ptr >= s1.length()) {	
+					return true;	//reached end of s1 string
+				}
+			} else if (s1_ptr > 0){
+				s1_ptr = 0;
+			} else {
+				s2_ptr++;
+			}
+		}	
+		return false;	//reached end of s2 string
+		
+	}
+>>>>>>> ba3bb46b1b8ed7df621f8cfa471a0f4d1f04805e
 }
