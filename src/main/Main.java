@@ -8,6 +8,8 @@ import java.util.Set;
 
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
+import solver.game.peg.PegGrid;
+import solver.game.peg.PegSolver;
 import solver.grid.*;
 
 
@@ -325,6 +327,18 @@ public class Main {
 		System.out.println("Getting hash: " + hashmap.get(yourPn));
 		*/
 		
+		PegGrid myGrid = new PegGrid();
+		myGrid.initialize();
+
+		PegGrid winCondition = new PegGrid();
+		winCondition.setCell(3, 3, true);
+		
+		PegSolver solver = new PegSolver(winCondition);
+		solver.solve(myGrid);
+		
+		long endTime   = System.currentTimeMillis();
+		long totalTime = endTime - startTime;
+		System.out.println("Total time taken: " + totalTime);
 		/*
 		Grid myGrid = new Grid();
 		myGrid.Initialize();

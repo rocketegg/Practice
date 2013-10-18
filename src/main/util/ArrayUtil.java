@@ -18,7 +18,6 @@ public class ArrayUtil {
 		//     equals the number you are trying to swap it with, there is a duplicate.
 		//     if the number you are trying to swap array[x] 
 		//	 Also - only swap if the number you are swapping with is in the wrong place
-		// - take care of the condition of first and last elements 
 		for (int x = 0; x < array.length; x++) {
 			printArray(array);
 			int swapTo = array[x];

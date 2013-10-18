@@ -9,6 +9,10 @@ public class PegSolver implements ISolver<PegGrid, PegGridMove> {
 
 	private PegGridCell [] winCondition;
 	
+	public PegSolver(PegGrid winCondition) {
+		setWinCondition(winCondition);
+	}
+	
 	@Override
 	public void move(PegGrid grid, PegGridMove move) throws InvalidCellException {
 		int grid_origin_row = move.getOrigin().getRow();
@@ -32,7 +36,6 @@ public class PegSolver implements ISolver<PegGrid, PegGridMove> {
 			}
 		}
 		grid.getCell(grid_dest_row, grid_dest_col).setHasStone(true);
-		grid.decrementNumStones();
 	}
 
 	@Override
@@ -59,7 +62,6 @@ public class PegSolver implements ISolver<PegGrid, PegGridMove> {
 				grid.getCell(grid_origin_row-1, grid_origin_col).setHasStone(true);
 			}
 		}
-		grid.incrementNumStones();
 
 	}
 
@@ -88,7 +90,9 @@ public class PegSolver implements ISolver<PegGrid, PegGridMove> {
 
 	@Override
 	public void setWinCondition(PegGrid g) {
-		g.getCellsWithStones().toArray(winCondition);
+		System.out.println("WIN CONDITION SET:");
+		g.printGrid();
+		this.winCondition = g.getCellsWithStones().toArray(new PegGridCell[g.getCellsWithStones().size()]);
 	}
 
 	@Override
