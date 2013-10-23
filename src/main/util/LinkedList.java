@@ -1,15 +1,21 @@
 package main.util;
 
+import java.util.HashMap;
+
 public class LinkedList {
 
 	public Node<Integer> head;
 	
 	public LinkedList() {
-		head = null;
+		this.head = null;
 	}
 	
 	public LinkedList(Node n) {
-		head = n;
+		this.head = n;
+	}
+	
+	public void insert(Integer n) {
+		this.insert(new Node<Integer>(n));
 	}
 	
 	public void insert(Node n) {
@@ -25,11 +31,12 @@ public class LinkedList {
 	}
 	
 	public void print() {
-		Node t = head;
+		Node t = this.head;
 		while (t != null) {
-			System.out.print(t.value + " ");
+			System.out.print(t.value + " -> ");
 			t = t.next;
 		}
+		System.out.print("null\n");
 	}
 	
 	public LinkedList combineLists(LinkedList list2) {
@@ -61,6 +68,59 @@ public class LinkedList {
 
 	    newList.head = newList.head.next;
 	    return newList;
+	}
+	
+	/**
+	 * Takes a linked list and removes duplicates and returns a new list
+	 * @return
+	 */
+	public LinkedList removeDuplicatesHashMap() {
+		Node<Integer> list = this.head;
+		Node<Integer> ret = this.head;
+		HashMap<Integer, Boolean> values = new HashMap<Integer, Boolean>();
+		
+		while (list != null) {
+			Node<Integer> prev = list;
+			if (!values.containsKey(list.value))
+				values.put(list.value, true);
+			list = list.next;
+			if (list != null) {
+				if (values.containsKey(list.value)) { 
+					prev.next = list.next;
+					list = prev;
+				}
+			} 
+		}
+		return new LinkedList(ret);
+	}
+	
+	public LinkedList removeDuplicatesConstantMemory() {
+		return null;
+	}
+	
+	/**
+	 * returns the linked list in reverse
+	 * @return
+	 */
+	public LinkedList reverseIterative() {
+		Node<Integer> curr = this.head;
+		if (curr == null || curr.next == null) //if one element
+			return new LinkedList(curr);
+		else {	//more than one
+			Node<Integer> prev = curr;
+			curr = curr.next;
+			prev.next = null;
+			while (curr != null) {
+				Node<Integer> temp = curr.next;
+				curr.next = prev;
+				prev = curr;
+				curr = temp;
+			}
+			this.head = prev;
+			LinkedList returnVal = new LinkedList(prev);
+			return returnVal;
+		}
+		
 	}
 	
 }

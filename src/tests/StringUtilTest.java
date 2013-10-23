@@ -1,7 +1,7 @@
 package tests;
 
 
-import main.StringUtil;
+import main.util.StringUtil;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +15,7 @@ public class StringUtilTest extends TestCase {
 		super.setUp();
 	}
 
+	/*
 	@Test
 	public void testATOI() {
 		for (int x = 0; x < 100; x++ ) {
@@ -60,6 +61,34 @@ public class StringUtilTest extends TestCase {
 		
 		s = "yes i said it because i can";
 		assertTrue(StringUtil.reverseWords(s).equals("can i because it said i yes"));
+	}
+	*/
+	
+	public void testPalindrome() {
+		System.out.println("TESTING PALINDROME");
+		String s = "the cat came home";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "aabbccbbaa";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "bbcccbb";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "bbcdcbb";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "racecar";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "raceeeeeeeecar";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "raceeeeeeeedar";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+	}
+	
+	public void testKPalindrome() {
+		System.out.println("TESTING K-PALINDROME");
+		String s = "abxca";
+		
+		for (int x = 0; x < 3; x ++) {
+			System.out.println(s + " is " + x + " palindrome? " + StringUtil.isKPalindrome(s, x));
+		}
 	}
 
 }
