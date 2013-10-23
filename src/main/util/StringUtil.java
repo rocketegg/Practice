@@ -1,7 +1,11 @@
 package main.util;
 
+import java.util.HashMap;
+import java.util.Stack;
+
 public class StringUtil {
 
+	
 	/**
 	 * converts ascii String s into int
 	 * @param s
@@ -112,7 +116,7 @@ public class StringUtil {
 		if (k < 0) {
 			System.out.println("\t"+s + " is not" + k + "-palindrome.");
 			return false;
-		} else if (k == 0) {
+		} else if (k == 0 || s == null || s.length() == 1) {
 			if (StringUtil.isPalindrome(s)) {
 				System.out.println("\t"+s + " is " + k + "-palindrome.");
 				return true;
@@ -120,20 +124,14 @@ public class StringUtil {
 				System.out.println("\t"+s + " is not " + k + "-palindrome.");
 				return false;
 			}
-
 		} else {
-			if (s == null || s.length() == 1) {
-				System.out.println("\t"+s + " is palindrome.");
-				return true;
-			}
 			int l = 0;
 			int r = s.length()-1;
 			if (s.charAt(l) == s.charAt(r)) {
 				return (l+1 <= r-1) ? isKPalindrome(s.substring(l+1, r), k) : false;
 			} else {
 				return isKPalindrome(s.substring(l+1), k-1) ||
-						isKPalindrome(s.substring(l, r), k-1) ||
-						isKPalindrome(s.substring(l+1, r), k-2);
+						isKPalindrome(s.substring(l, r), k-1);
 			}
 		}
 		
@@ -155,5 +153,168 @@ public class StringUtil {
 		}
 		return (l < r) ? false : true;
 	}
+	
+	/**
+	 * function to determine if a string is a palindrome
+	 * @param s
+	 * @return
+	 */
+	public static boolean isPalindromeRecursive(String s) {
+		if (s == null || s.length() <= 1) 
+			return true;
+		if (s.charAt(0) == s.charAt(s.length()-1)) {
+			return isPalindromeRecursive(s.substring(1, s.length()-1));
+		}
+		return false;
 
+	}
+	
+	/**
+	 * Returns if String t is a permutation of String s
+	 * @param s
+	 * @param t
+	 * @return
+	 */
+	public static boolean isPermutationMethod3(String s, String t) {
+
+		if (s.length() < t.length()) {
+			return false;
+		}
+		
+		HashMap<Character, Integer> h = new HashMap <Character, Integer>(s.length());
+		
+		//step 1 - for each character in a string, add a character key to the map and an int (if null, make it 1) otherwise increment it)
+		for (char c : s.toCharArray()) {
+			Character cc = new Character(c);
+			if (h.containsKey(cc)) {
+				int i = h.get(cc);
+				i++;
+				h.put(cc, new Integer(i));
+			} else {
+				h.put(cc, new Integer(1));
+			}
+		}
+		
+		//step 2 - for each character in t, make sure there is a corresponding value key pair in hashmap
+		//if there is one, decrement; if value would be 0, delete
+		//if ever you can't find it, return false
+		
+		for (char d : t.toCharArray()) {
+			Character dd = new Character(d);
+			if (h.containsKey(dd)) {
+				int j = h.get(dd);
+				j--;
+				if (j == 0) {
+					h.remove(dd);
+				} else {
+					h.put(dd, new Integer(j));
+				}
+			} else {
+				return false;
+			}
+			
+		}
+		return true;
+	}
+	
+	/**
+	 * Returns the index of the nth occurrence of a character
+	 * IF there is no nth occurrence, returns -1
+	 * @param s
+	 * @param c
+	 * @param nth
+	 * @return
+	 */
+	public static int nthOccurrence(String s, char c, int nth) {
+		char[]chars  = s.toCharArray();
+		int matches = 0;
+		for (int i = 0; i < chars.length; i++) {
+			if (chars[i] == c) {
+				matches++;
+				if (matches == nth)
+					return i;
+			}
+		}
+		return -1;
+	}
+	
+
+	private static HashMap<String, Boolean> dictionary = new HashMap<String, Boolean>();
+	
+	/**
+	 * Returns whether a word is a valid "word", i.e. made up of characters
+	 * in the character array
+	 * @param c
+	 * @return
+	 */
+	public static boolean isValidWord(String s, char [] c) {
+		//System.out.println("[" + s + "]");
+		if (dictionary.containsKey(s)) {	//word found in dictionary
+			//System.out.println("\tFound word in dictionary: " + s);
+			return true;
+		}
+		if (s.length() == 0) //empty words are in the language
+			return true;
+		boolean goLeft = false;
+		boolean goRight = false;
+		for (int i = 0; i < c.length; i++) {
+			if (s.charAt(0) == c[i])
+				goLeft = true;
+			if (s.charAt(s.length()-1) == c[i])
+				goRight = true;
+		}
+		if (s.length() <= 1 && goLeft && goRight)
+			return true;
+		if (goLeft == false || goRight == false) {
+			return false;
+		} 
+		boolean isValid = isValidWord(s.substring(1, s.length()), c) && isValidWord(s.substring(0, s.length()-1), c);
+		if (isValid) {
+			dictionary.put(s.substring(1, s.length()-1), true);
+			//System.out.println("Adding " + s.substring(1, s.length()) + " as valid word.");
+		}
+		return isValid; 
+	}
+	
+	public static String reconstructSentence(String s, HashMap<String, Boolean> dictionary) {
+		int ptr = 0;
+		Stack<Integer> spaces = new Stack<Integer>();
+		spaces.add(ptr);
+		String currWord = "";
+		while (!spaces.isEmpty()) {
+			currWord = s.substring(spaces.peek(), ptr);
+			System.out.println("Curr Word: " + currWord);
+			if (dictionary.containsKey(currWord)) {
+				System.out.println(">>>Found word: " + currWord);
+				spaces.push(ptr);
+			}
+			if (ptr >= s.length()) {	//reached the end and currWord is still not a word
+				if (dictionary.containsKey(currWord)) {
+					System.out.println("Sentence is done!");
+					spaces.push(ptr);	//Done.
+					break;
+				}
+				System.out.println("Backtracking ...");
+				if (spaces.isEmpty()) {
+					System.out.println("Sentence could not be reconstructed");
+					break;
+				} else {
+					ptr = spaces.pop();
+				}
+			}
+			ptr++;
+		}
+		
+		//Reconstruct Sentence
+		int to = s.length();
+		String sentence = "";
+		while (!spaces.isEmpty()) {
+			int from = spaces.pop();
+			String word = s.substring(from, to);
+			to = from;
+			sentence = word + " " + sentence;
+		}
+		
+		return sentence;
+	}
 }

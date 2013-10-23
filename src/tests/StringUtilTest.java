@@ -1,10 +1,14 @@
 package tests;
 
 
+import java.util.HashMap;
+
 import main.util.StringUtil;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.sun.xml.internal.ws.util.StringUtils;
 
 import junit.framework.TestCase;
 
@@ -64,6 +68,7 @@ public class StringUtilTest extends TestCase {
 	}
 	*/
 	
+	/*
 	public void testPalindrome() {
 		System.out.println("TESTING PALINDROME");
 		String s = "the cat came home";
@@ -80,15 +85,109 @@ public class StringUtilTest extends TestCase {
 		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
 		s = "raceeeeeeeedar";
 		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "aa";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+		s = "c";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindrome(s));
+	}
+	
+	public void testPalindromeRecursive() {
+		System.out.println("TESTING PALINDROME RECURSIVE");
+		String s = "the cat came home";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "aabbccbbaa";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "bbcccbb";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "bbcdcbb";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "racecar";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "raceeeeeeeecar";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "raceeeeeeeedar";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "aa";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
+		s = "c";
+		System.out.println(s + " is palidrome? " + StringUtil.isPalindromeRecursive(s));
 	}
 	
 	public void testKPalindrome() {
 		System.out.println("TESTING K-PALINDROME");
-		String s = "abxca";
+		String s = "malayalxam";
 		
-		for (int x = 0; x < 3; x ++) {
+		for (int x = 0; x <= 1; x ++) {
 			System.out.println(s + " is " + x + " palindrome? " + StringUtil.isKPalindrome(s, x));
 		}
 	}
 
+	public void testTemp() {
+		String s = "dealer-12345-TW-Simplefeed_al";
+		String dealerID = s.substring(StringUtil.nthOccurrence(s, '-', 1)+1, StringUtil.nthOccurrence(s, '-', 2));
+		String pageID = s.substring(StringUtil.nthOccurrence(s, '-', 3)+1, s.length());
+		System.out.println("dealer ID: " + dealerID + " pageID: " + pageID);
+		
+		s = "dealer-4094-FB-556970337691274";
+		dealerID = s.substring(StringUtil.nthOccurrence(s, '-', 1)+1, StringUtil.nthOccurrence(s, '-', 2));
+		pageID = s.substring(StringUtil.nthOccurrence(s, '-', 3)+1, s.length());
+		System.out.println("dealer ID: " + dealerID + " pageID: " + pageID);
+		
+		s = "dealer-12345-FB-1234567891011";
+		dealerID = s.substring(StringUtil.nthOccurrence(s, '-', 1)+1, StringUtil.nthOccurrence(s, '-', 2));
+		pageID = s.substring(StringUtil.nthOccurrence(s, '-', 3)+1, s.length());
+		System.out.println("dealer ID: " + dealerID + " pageID: " + pageID);
+		
+		s = "dealer-12345-TW-Simplefeed-al";
+		dealerID = s.substring(StringUtil.nthOccurrence(s, '-', 1)+1, StringUtil.nthOccurrence(s, '-', 2));
+		pageID = s.substring(StringUtil.nthOccurrence(s, '-', 3)+1, s.length());
+		System.out.println("dealer ID: " + dealerID + " pageID: " + pageID);
+		
+		s = "dealer-12345-RSS-Simplefeed_al";
+		dealerID = s.substring(StringUtil.nthOccurrence(s, '-', 1)+1, StringUtil.nthOccurrence(s, '-', 2));
+		pageID = s.substring(StringUtil.nthOccurrence(s, '-', 3)+1, s.length());
+		System.out.println("dealer ID: " + dealerID + " pageID: " + pageID);
+	}*/
+	/*
+	public void testValidWord() {
+		String s = "iheihrieeihriehhriereiree";
+		String letters = "hire";
+		System.out.println(s + " is valid? " + StringUtil.isValidWord(s, letters.toCharArray()));
+		
+		s = "iheihrieeihraiehhriereiaree";
+		System.out.println(s + " is valid? " + StringUtil.isValidWord(s, letters.toCharArray()));
+		
+		String ds = "iehhrierei";
+		System.out.println(ds + " is valid? " + StringUtil.isValidWord(ds, letters.toCharArray()));
+		
+		String ss = ds + "iheihrieeihriehhriereiree";
+		System.out.println(ss + " is valid? " + StringUtil.isValidWord(ss, letters.toCharArray()));
+		
+		s = "iheihrieeihriehhriereiree"; 
+		System.out.println(s + " is valid? " + StringUtil.isValidWord(s, letters.toCharArray()));
+	}*/
+	
+	public void testValidSentence() {
+		HashMap<String, Boolean> dictionary = new HashMap<String, Boolean>();
+		dictionary.put("the", true);
+		dictionary.put("dog", true);
+		dictionary.put("went", true);
+		dictionary.put("to", true);
+		dictionary.put("park", true);
+		dictionary.put("in", true);
+		dictionary.put("sunshine", true);
+		dictionary.put("happy", true);
+		dictionary.put("do", true);
+		dictionary.put("sun", true);
+		dictionary.put("shine", true);
+		dictionary.put("sunny", true);
+		dictionary.put("on", true);
+		dictionary.put("a", true);
+		dictionary.put("day", true);
+		
+		String sentence = "thehappydogwenttotheparkonasunnyday";
+		
+		System.out.println(sentence + " Reconstructed: " + StringUtil.reconstructSentence(sentence, dictionary));
+	}
+	
 }

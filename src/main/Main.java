@@ -52,47 +52,7 @@ public class Main {
 		}
 	}
 	
-	public static boolean isPermutationMethod3(String s, String t) {
-
-		if (s.length() != t.length()) {
-			return false;
-		}
-		
-		HashMap<Character, Integer> h = new HashMap <Character, Integer>(s.length());
-		
-		//step 1 - for each character in a string, add a character key to the map and an int (if null, make it 1) otherwise increment it)
-		for (char c : s.toCharArray()) {
-			Character cc = new Character(c);
-			if (h.containsKey(cc)) {
-				int i = h.get(cc);
-				i++;
-				h.put(cc, new Integer(i));
-			} else {
-				h.put(cc, new Integer(1));
-			}
-		}
-		
-		//step 2 - for each character in t, make sure there is a corresponding value key pair in hashmap
-		//if there is one, decrement; if value would be 0, delete
-		//if ever you can't find it, return false
-		
-		for (char d : t.toCharArray()) {
-			Character dd = new Character(d);
-			if (h.containsKey(dd)) {
-				int j = h.get(dd);
-				j--;
-				if (j == 0) {
-					h.remove(dd);
-				} else {
-					h.put(dd, new Integer(j));
-				}
-			} else {
-				return false;
-			}
-			
-		}
-		return true;
-	}
+	
 	
 	public static boolean isPermutationMethod2(String s, String t) {
 		
