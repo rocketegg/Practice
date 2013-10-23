@@ -10,7 +10,6 @@ import solver.grid.Grid;
 
 public class PegGrid extends IGrid<PegGridCell, PegGridMove> {
 
-	private int numStones;
 	private int gridRows;
 	private int gridCols;
 	private PegGridCell [][] grid;
@@ -20,12 +19,12 @@ public class PegGrid extends IGrid<PegGridCell, PegGridMove> {
 	 * Initializes empty grid
 	 */
 	public PegGrid() {	
-		int gridRows = 7;
-		int gridCols = 7;
+		this.gridRows = 7;
+		this.gridCols = 7;
 		grid = new PegGridCell[gridRows][gridCols];
 		for (int i = 0; i < gridRows; i++) {
 			for (int j = 0; j < gridCols; j++) {
-				grid[i][j] = new PegGridCell(i, j, false, false);
+				grid[i][j] = new PegGridCell(i, j, true, false);
 			}
 		}
 	}
@@ -33,18 +32,10 @@ public class PegGrid extends IGrid<PegGridCell, PegGridMove> {
 	@Override
 	public void initialize() {
 		// TODO Auto-generated method stub
-		int gridRows = 7;
-		int gridCols = 7;
+		this.gridRows = 7;
+		this.gridCols = 7;
 		grid = new PegGridCell[gridRows][gridCols];
-		//winCondition = new GridCell[1];
-		//winCondition[0] = new GridCell(true, 3, 4, true);
-		/*winCondition[0] = new GridCell(true, 2, 2, true);
-		winCondition[1] = new GridCell(true, 4, 2, true);
-		winCondition[2] = new GridCell(true, 4, 4, true);
-		winCondition[3] = new GridCell(true, 2, 4, true);
-		winCondition[4] = new GridCell(true, 6, 3, true);
-		winCondition[5] = new GridCell(true, 3, 0, true);*/
-		//winCondition[5] = new GridCell(true, 3, 6, true);
+
 		for (int i = 0; i < gridRows; i++) {
 			for (int j = 0; j < gridCols; j++) {
 				if ((i < 2 && j < 2) || 
@@ -58,33 +49,40 @@ public class PegGrid extends IGrid<PegGridCell, PegGridMove> {
 					grid[i][j] = new PegGridCell(i, j, true, false);
 				} else {
 					grid[i][j] = new PegGridCell(i, j, true, true);
-					setNumStones(getNumStones() + 1);
 				}
 			}
 		}
-		setNumStones(0);
+		System.out.println("STARTING GRID:");
+		printGrid();
 	}
 	
 	@Override
 	public ArrayList<PegGridMove> getMovesForCell(PegGridCell gc) {
 		ArrayList<PegGridMove> validMoves = new ArrayList<PegGridMove> ();
 		//up 
-		PegGridMove up = new PegGridMove(this, gc, grid[gc.getRow()-2][gc.getCol()]);
-		if (gc.getRow()-2 > -1 && up.canJump()) 
-			validMoves.add(up);
-		//down
-		PegGridMove down = new PegGridMove(this, gc, grid[gc.getRow()+2][gc.getCol()]);
-		if (gc.getRow()+2 < gridRows && down.canJump()) 
-			validMoves.add(down);
-		//left
-		PegGridMove left = new PegGridMove(this, gc, grid[gc.getRow()][gc.getCol()-2]);
-		if (gc.getCol()-2 > -1 && left.canJump())
-			validMoves.add(left);
-		//right
-		PegGridMove right = new PegGridMove(this, gc, grid[gc.getRow()][gc.getCol()+2]);
-		if (gc.getCol()+2 < gridCols && right.canJump()) 
-			validMoves.add(right);
 
+		if (gc.getRow()-2 > -1) {
+			PegGridMove up = new PegGridMove(this, gc, grid[gc.getRow()-2][gc.getCol()]);
+			if (up.canJump()) { validMoves.add(up); }
+		}
+			
+		//down
+		if (gc.getRow()+2 < gridRows) { 
+			PegGridMove down = new PegGridMove(this, gc, grid[gc.getRow()+2][gc.getCol()]);
+			if (down.canJump()) { validMoves.add(down); }
+		}
+		
+		//left
+		if (gc.getCol()-2 > -1) {
+			PegGridMove left = new PegGridMove(this, gc, grid[gc.getRow()][gc.getCol()-2]);
+			if (left.canJump()) { validMoves.add(left); }
+		}
+		//right
+		
+		if (gc.getCol()+2 < gridCols) {
+			PegGridMove right = new PegGridMove(this, gc, grid[gc.getRow()][gc.getCol()+2]);
+			if (right.canJump()) { validMoves.add(right); }
+		}
 		return validMoves;
 	}
 
@@ -135,6 +133,10 @@ public class PegGrid extends IGrid<PegGridCell, PegGridMove> {
 		}
 	}
 	
+	public void setCell(int row, int col, boolean hasStone) {
+		grid[row][col].setHasStone(hasStone);
+	}
+	
 	/*
 	 * Methods specific to this class
 	 */
@@ -182,20 +184,7 @@ public class PegGrid extends IGrid<PegGridCell, PegGridMove> {
 	 */
 	
 	public int getNumStones() {
-		return numStones;
+		return getCellsWithStones().size();
 	}
-	
-	public void setNumStones(int numStones) {
-		this.numStones = numStones;
-	}
-	
-	public void decrementNumStones() {
-		this.numStones--;
-	}
-	
-	public void incrementNumStones() {
-		this.numStones--;
-	}
-
 	
 }
