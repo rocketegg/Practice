@@ -42,4 +42,61 @@ public class ArrayUtil {
 		System.out.println();
 	}
 	
+	public static int[] addArrays(int [] a, int [] b) {
+		int [] c = new int[Math.max(a.length, b.length) + 1];
+		int i = Math.max(a.length, b.length) - 1;
+		int j = Math.min(a.length, b.length) - 1;
+		int carry = 0;
+		
+		//less code solution
+		/* int actr = a.length - 1;
+		 * int bctr = b.length - 1;
+		 * while (i >= 0) {
+		 * 	  	c[i] = carry;
+		 * 		if (actr >= 0)
+		 * 			c[i] += actr;
+		 * 		if (bctr >= 0)
+		 * 			c[i] += bctr;
+		 * 	  	carry = c[i] / 10		
+		 * 		c[i] = c[i] % 10;
+		 * 	actr--;
+		 *  bctr--;
+		 *  i--;
+		 * 		
+		 * }
+		 */
+		
+		//add all digits
+		while (i >= 0 && j >= 0) {
+			c[i+1] = (a[i] + b[j] + carry) % 10;
+			carry = (a[i] + b[j] + carry) / 10;
+			i--;
+			j--;
+		}
+		//finish off digits
+		
+		while (i >= 0 || j >= 0) {
+			if (a.length > b.length) {
+				c[i+1] = (a[i] + carry) % 10;
+				carry = (a[i] + carry) / 10;
+			}
+			else {
+				c[i+1] = (b[i] + carry) % 10;
+				carry = (b[i] + carry) / 10;
+			}
+		}
+		
+		c[0] = carry;
+		
+		return c;
+	}
+	
+	public static String arrayValsToString(int [] a) {
+		StringBuilder sb = new StringBuilder();
+		for (int i : a) {
+			sb.append(i);
+		}
+		return sb.toString();
+	}
+	
 }
