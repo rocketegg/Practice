@@ -1,5 +1,7 @@
 package main.util;
 
+import java.util.Arrays;
+
 public class ArrayUtil {
 
 	/** From Career Cup
@@ -42,6 +44,14 @@ public class ArrayUtil {
 		System.out.println();
 	}
 	
+	/**
+	 * This function takes two arrays that represent big integers
+	 * [9][4][3][2]....[3] (n digits)
+	 * and adds them together returning another array in the process
+	 * @param a
+	 * @param b
+	 * @return
+	 */
 	public static int[] addArrays(int [] a, int [] b) {
 		int [] c = new int[Math.max(a.length, b.length) + 1];
 		int i = Math.max(a.length, b.length) - 1;
@@ -87,16 +97,75 @@ public class ArrayUtil {
 		}
 		
 		c[0] = carry;
-		
-		return c;
+		return (c[0] == 0) ? Arrays.copyOfRange(c, 1, c.length) : c;
 	}
 	
+	/**
+	 * This function takes an array representing integers in a string and 
+	 * concatenates them into a string
+	 * @param a
+	 * @return
+	 */
 	public static String arrayValsToString(int [] a) {
 		StringBuilder sb = new StringBuilder();
 		for (int i : a) {
 			sb.append(i);
 		}
 		return sb.toString();
+	}
+	
+	/**
+	 * This function takes a list of integers and uses merge sort to sort them
+	 * and returns a new array
+	 * @param list
+	 * @return
+	 */
+	public static int [] mergeSort(int [] list) {
+		if (list.length == 1)
+			return list;
+		int middle = list.length/2;
+		int [] left = new int [middle];
+		for (int x = 0; x < middle; x++) 
+			left[x] = list[x];
+			System.out.print("left:"); printArray(left);
+		int [] right = new int [list.length - middle];
+		for (int x = 0; x < list.length - middle; x++) 
+			right[x] = list[middle + x];
+			System.out.print("right:"); printArray(right);
+		return merge(mergeSort(left), mergeSort(right));
+	}
+	
+	/**
+	 * This function merges two already sorted lists (in ascending order)
+	 * @param list1
+	 * @param list2
+	 * @return
+	 */
+	public static int [] merge(int [] list1, int [] list2) {
+		int ptr1 = 0;
+		int ptr2 = 0;
+		int i = 0;
+		int [] combined = new int [list1.length + list2.length];
+		System.out.println("Combining ->");
+			System.out.print("list 1:"); printArray(list1);
+			System.out.print("list 2:"); printArray(list2);
+		while (ptr1 < list1.length || ptr2 < list2.length) {
+			if (ptr1 >= list1.length) {
+				combined[i] = list2[ptr2];
+				ptr2++;
+			} else if (ptr2 >= list2.length || list1[ptr1] < list2[ptr2]) {
+				combined[i] = list1[ptr1];
+				ptr1++;
+			} else {
+				combined[i] = list2[ptr2];
+				ptr2++;
+			}
+			i++;
+		}
+		
+		System.out.println("\tCombined =>");
+			System.out.print("combined:"); printArray(combined);
+		return combined;
 	}
 	
 }
