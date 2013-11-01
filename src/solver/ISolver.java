@@ -2,7 +2,7 @@ package solver;
 
 import solver.exceptions.InvalidCellException;
 
-public interface ISolver<G extends IGrid, M extends GridMove> {
+public interface ISolver<G extends IGrid<?, ?>, M extends GridMove<?>> {
 
 	public void move(G g, M m) throws InvalidCellException;	//steps forward through the Grid
 	public void undoMove(G g, M m) throws InvalidCellException;	//undoes last step - necessary for solve();

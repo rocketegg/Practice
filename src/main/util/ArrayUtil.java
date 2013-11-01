@@ -10,7 +10,7 @@ public class ArrayUtil {
 	 * Do it in constant space and O(n) time.
 	 * @return
 	 */
-	public static boolean hasDouble(int [] array) {
+	public static boolean hasDouble(Integer [] array) {
 		//Algorithm
 		//go through array iteratively
 		//each number you see corresponds to an index.  
@@ -37,9 +37,9 @@ public class ArrayUtil {
 		
 	}
 	
-	public static void printArray(int [] array) {
-		for (int i : array) {
-			System.out.print("[" + i + "] ");
+	public static <T> void printArray(T [] array) {
+		for (T i : array) {
+			System.out.print("[" + i.toString() + "] ");
 		}
 		System.out.println();
 	}

@@ -2,27 +2,27 @@ package solver;
 
 public abstract class GridMove <G extends GridCell> {
 	
-	private GridCell origin;
-	private GridCell destination;
+	private G origin;
+	private G destination;
 	
-	public GridMove(GridCell origin, GridCell destination) {
+	public GridMove(G origin, G destination) {
 		this.origin = origin;
 		this.destination = destination;
 	}
 
-	public GridCell getOrigin() {
+	public G getOrigin() {
 		return origin;
 	}
 
-	public void setOrigin(GridCell origin) {
+	public void setOrigin(G origin) {
 		this.origin = origin;
 	}
 
-	public GridCell getDestination() {
+	public G getDestination() {
 		return destination;
 	}
 
-	public void setDestination(GridCell destination) {
+	public void setDestination(G destination) {
 		this.destination = destination;
 	}
 }

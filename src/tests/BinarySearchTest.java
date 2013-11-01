@@ -8,15 +8,15 @@ import org.junit.Test;
 
 public class BinarySearchTest extends TestCase {
 
-	private int[] list_inc;
-	private int[] list_by_threes;
+	private Integer[] list_inc;
+	private Integer[] list_by_threes;
 	
 	protected void setUp() {
-		list_inc = new int[10];
+		list_inc = new Integer[10];
 		for (int i = 0; i < list_inc.length; i++) {
 			list_inc[i] = i;
 		}
-		list_by_threes = new int[10];
+		list_by_threes = new Integer[10];
 		for (int i = 0; i < list_by_threes.length; i++) {
 			list_by_threes[i] = i*3;
 		}
