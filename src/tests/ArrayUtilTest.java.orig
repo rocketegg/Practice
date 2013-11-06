@@ -1,13 +1,20 @@
 package tests;
 
+import java.util.Arrays;
+
 import junit.framework.TestCase;
 import main.util.ArrayUtil;
 
 import org.junit.Before;
 
 public class ArrayUtilTest extends TestCase {
-	Integer [] array = new Integer[15];
-	Integer [] array2 = new Integer[15];
+<<<<<<< Updated upstream
+	int [] array = new int[15];
+	int [] array2 = new int[15];
+=======
+	Integer [] array = new Integer[10];
+	Integer [] array2 = new Integer[10];
+>>>>>>> Stashed changes
 	@Before
 	public void setUp() {
 		for (int x = 0; x < array.length; x++) {
@@ -16,7 +23,7 @@ public class ArrayUtilTest extends TestCase {
 		}
 		for (int x = 0; x < array2.length; x++) {
 			//array2[x] = x;
-			array2[x] = TestUtils.randomInt(0, 20);
+			array2[x] = TestUtils.randomInt(0, 9);
 		}
 		//array2[5]=9;
 	}
@@ -55,31 +62,10 @@ public class ArrayUtilTest extends TestCase {
 		ArrayUtil.printArray(array2);
 		ArrayUtil.printArray(ArrayUtil.merge(array, array2));
 	}*/
-	/*
+	
 	public void testMergeSort() {
 		System.out.print("Testing merge sort on array: "); ArrayUtil.printArray(array);
-		System.out.println("=======================================");
 		ArrayUtil.mergeSort(array);
-	}*/
-	
-	/*
-	public void testMaxSubArray() {
-		System.out.println("Testing max sub array");
-		System.out.println("=======================================");
-		
-		ArrayUtil.printArray(array2);
-		Integer[] maxSub = ArrayUtil.maxSubarray(array2);
-		ArrayUtil.printArray(maxSub);
-		
-	}*/
-	
-	public void testRotate() {
-		array2 = ArrayUtil.mergeSort(array2);
-		ArrayUtil.printArray(array2);
-		ArrayUtil.rotateArray(array2, 5);
-		ArrayUtil.printArray(array2);
-		ArrayUtil.rotateArray(array2, 1);
-		ArrayUtil.printArray(array2);
 	}
 	
 }

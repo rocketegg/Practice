@@ -44,13 +44,11 @@ public class ArrayUtil {
 		System.out.println();
 	}
 	
+<<<<<<< Updated upstream
 	/**
 	 * This function takes two arrays that represent big integers
 	 * [9][4][3][2]....[3] (n digits)
 	 * and adds them together returning another array in the process
-	 * Approach: Create new array of size a.length and b.length
-	 *   - Iterate through and carry the carry through each time
-	 *   - store the digit which is the sum % 10
 	 * @param a
 	 * @param b
 	 * @return
@@ -123,38 +121,35 @@ public class ArrayUtil {
 	 * @param list
 	 * @return
 	 */
-	public static Integer [] mergeSort(Integer [] list) {
+	public static int [] mergeSort(int [] list) {
 		if (list.length == 1)
 			return list;
 		int middle = list.length/2;
-		Integer [] left = new Integer [middle];
+		int [] left = new int [middle];
 		for (int x = 0; x < middle; x++) 
 			left[x] = list[x];
-			//System.out.print("left:"); printArray(left);
-		Integer [] right = new Integer [list.length - middle];
+			System.out.print("left:"); printArray(left);
+		int [] right = new int [list.length - middle];
 		for (int x = 0; x < list.length - middle; x++) 
 			right[x] = list[middle + x];
-			//System.out.print("right:"); printArray(right);
+			System.out.print("right:"); printArray(right);
 		return merge(mergeSort(left), mergeSort(right));
 	}
 	
 	/**
 	 * This function merges two already sorted lists (in ascending order)
-	 * Approach:
-	 * 	- just keeps two pointers and moves pointer along for whichever
-	 * list is being used to create the new list
 	 * @param list1
 	 * @param list2
 	 * @return
 	 */
-	public static Integer [] merge(Integer [] list1, Integer [] list2) {
+	public static int [] merge(int [] list1, int [] list2) {
 		int ptr1 = 0;
 		int ptr2 = 0;
 		int i = 0;
-		Integer [] combined = new Integer [list1.length + list2.length];
-		/*System.out.println("Combining ->");
+		int [] combined = new int [list1.length + list2.length];
+		System.out.println("Combining ->");
 			System.out.print("list 1:"); printArray(list1);
-			System.out.print("list 2:"); printArray(list2);*/
+			System.out.print("list 2:"); printArray(list2);
 		while (ptr1 < list1.length || ptr2 < list2.length) {
 			if (ptr1 >= list1.length) {
 				combined[i] = list2[ptr2];
@@ -169,56 +164,17 @@ public class ArrayUtil {
 			i++;
 		}
 		
-		/*System.out.println("\tCombined =>");
-			System.out.print("combined:"); printArray(combined);*/
+		System.out.println("\tCombined =>");
+			System.out.print("combined:"); printArray(combined);
 		return combined;
 	}
 	
-	/**
-	 * A famous problem that returns the maximum subarray (continguous elements)
-	 * in an array 
-	 *  	- solved using Kadane's algorithm
-	 * @param list
-	 * @return
-	 */
-	public static Integer [] maxSubarray(Integer [] list) {
-		int maxSoFar = 0;
-		int maxToHere = 0;
-		int l = 0;
-		int r = 0;
-		int temp = 0;
-		for (int a = 0; a < list.length; a++) {
-			if (maxToHere < 0) {
-				maxToHere = list[a];
-				temp = a;
-			} else {
-				maxToHere += list[a];
-			}
-			
-			if (maxToHere >= maxSoFar) {
-				maxSoFar = maxToHere;
-				l = temp;
-				r = a;
-			}
+=======
+	public static <T> void printArrayValueOnly(T [] array) {
+		for (T i : array) {
+			System.out.print(i.toString() + " ");
 		}
-		System.out.println((l) + " " + (r) + " max: " + maxSoFar);
-		return Arrays.copyOfRange(list, l, r);
+		System.out.println();
 	}
-	
-	/**
-	 * Rotates an array by n positions
-	 * @param list
-	 * @param n
-	 * @return
-	 */
-	public static void rotateArray(Integer [] list, int n) {
-		for (int k=0; k < list.length/n; k++) {
-			for (int i = 0; i < n; i++) {
-				int temp = list[i+k*n];
-				list[i+k*n] = list[list.length-n+i];
-				list[list.length-n+i] = temp;
-	
-			}
-		}
-	}
+>>>>>>> Stashed changes
 }

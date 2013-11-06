@@ -3,6 +3,7 @@ package tests;
 import static org.junit.Assert.*;
 import junit.framework.TestCase;
 import main.BinarySearcher;
+import main.util.ArrayUtil;
 
 import org.junit.Test;
 
@@ -47,6 +48,21 @@ public class BinarySearchTest extends TestCase {
 			assertTrue(BinarySearcher.BinarySearch(list_inc, list_inc[Math.round((float) (Math.random()*100)) % (list_inc.length-1)]) != -1);
 			assertTrue(BinarySearcher.BinarySearch(list_by_threes, list_by_threes[Math.round((float) (Math.random()*100)) % (list_by_threes.length-1)]) != -1);
 		}
+	}
+	
+	@Test
+	public void testBinarySearchRotate() {
+		Integer [] temp = list_by_threes.clone();
+		ArrayUtil.printArray(temp);
+		ArrayUtil.rotateArray(temp, 3);
+		ArrayUtil.printArray(temp);
+		
+		System.out.println(BinarySearcher.binarySearchRotated(temp, 9));
+		System.out.println(BinarySearcher.binarySearchRotated(temp, 24));
+		//System.out.println(BinarySearcher.binarySearchRotated(temp, 27));
+		//System.out.println(BinarySearcher.binarySearchRotated(temp, 28));
+		System.out.println(BinarySearcher.binarySearchRotated(temp, 21));
+		System.out.println(BinarySearcher.binarySearchRotated(temp, 22));
 	}
 
 }
