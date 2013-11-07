@@ -26,8 +26,10 @@ public class HanoiTest extends TestCase {
 		}*/
 		s1.push(new Disc(5));
 		s1.push(new Disc(3));
+		s2.push(new Disc(6));
 		s2.push(new Disc(2));
 		s1.push(new Disc(1));
+		s3.push(new Disc(7));
 		s3.push(new Disc(4));
 		hs = new HanoiSolver(s1, s2, s3);
 	}
@@ -37,7 +39,7 @@ public class HanoiTest extends TestCase {
 	}*/
 	
 	public void testSolvee() {
-		hs.solve(s2);
+		hs.solve(s3);
 		System.out.println("Move Count: " + hs.getMoveCount());
 	}
 	

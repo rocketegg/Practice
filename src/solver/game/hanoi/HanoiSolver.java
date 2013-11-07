@@ -19,38 +19,56 @@ public class HanoiSolver {
 		moveCount = 0;
 	}
 	
+	/**
+	 * This function is the only public function that allows the user to specify the destination stack.
+	 * 	This will move every disc to the destination stack in a (hopefully) minimal # of moves
+	 * @param destination
+	 */
 	public void solve(Stack<Disc> destination) {
-		
 		System.out.println("Initial State: ");
 		printStacks();
 		System.out.println("Solving... ");
-		Stack<Disc> fromStack = findStack(1);	//the stack with count
-		int movable = findNumMovable(fromStack);
 		
-		while (movable < 5) { //should be max disc size
-			fromStack = findStack(1);	//the stack with count
-			movable = findNumMovable(fromStack);
-			Stack<Disc> toStack = findStack(movable+1);
-			System.out.println("num movable:" + movable);
-			if (movable < 5) {
-				moveDiscs(fromStack, toStack, getUnusedStack(fromStack, toStack), movable);
+		int maxDiscs = findMaxDisc();
+		
+		if (findStack(maxDiscs) != destination) {	//ensure that the n-1 stack is moved to the nondestination stack to free the biggest disc to move to the destination stack
+			solve(getUnusedStack(findStack(maxDiscs), destination), maxDiscs-1);
+		}
+		solve(destination, maxDiscs);
+	}
+	
+	/**
+	 * This function moves n discs to the destination stack if necessary.  It needs to be used in conjunction
+	 * with the solve(destination) method above, which recursively calls this function with alternating
+	 * stacks to guarantee no unnecessary moves. 
+	 * 
+	 * The algorithm is:
+	 * 		1) Find the stack with the smallest disc (size 1)
+	 * 			A) Find the number of discs movable
+	 * 		2) Find the stack with the next biggest disc (number movable discs + 1)
+	 * 		3) If there are less movable than the number of discs required to be moved:
+	 * 			A) If this number if n - 1 and you can move the last disc instead of building on top, do that
+	 * 			B) If this number is n - 1 and the n - 1 stack is the destination, move it to the unused stack
+	 * 			C) Otherwise, just move the stack with the smallest disc on top of the stack with the next biggest disc 
+	 * @param destination
+	 * @param numDiscs
+	 */
+	private void solve(Stack<Disc> destination, int numDiscs) {
+		int movable;
+		do { 
+			Stack<Disc> fromStack = findStack(1);	
+			movable = findNumMovable(fromStack);	
+			Stack<Disc> toStack = findStack(movable+1);		
+			if (movable < numDiscs) {
+				if (movable == numDiscs - 1 && toStack != destination && fromStack != destination) {	
+					moveDiscs(toStack, destination, fromStack, 1);
+				} else if (movable == numDiscs - 1 && fromStack == destination) { 
+					moveDiscs(fromStack, getUnusedStack(fromStack, toStack), toStack, movable);
+				} else {
+					moveDiscs(fromStack, toStack, getUnusedStack(fromStack, toStack), movable);
+				}
 			} 
-		}
-		
-		if (!fromStack.equals(destination)) {
-			fromStack = findStack(1);
-			moveDiscs(fromStack, destination, getUnusedStack(fromStack, destination), movable);
-		}
-		//moveDiscs(fromStack, toStack, getUnusedStack(fromStack, toStack)), movable);
-		//int max = Math.max(stack1.size(), Math.max(stack2.size(), stack3.size()));
-		//moveDiscs(stack1, stack2, stack3, max);	//move all discs from stack 1 to stack 2
-		//if stack isn't 100% - i.e. looks like this
-		//			  1
-		//            2 
-		// 2          3
-		// 3 1   =>   4
-		// 5 4 _    _ 5 _
-		//you solve this by finding the 1, moving it on top of the 2
+		} while (movable < numDiscs);
 	}
 	
 	private int findNumMovable(Stack<Disc> stack) {
@@ -66,6 +84,10 @@ public class HanoiSolver {
 			}
 		}
 		return movable;
+	}
+	
+	private int findMaxDisc() {
+		return stack1.size() + stack2.size() + stack3.size();
 	}
 	
 	/**
@@ -88,7 +110,12 @@ public class HanoiSolver {
 				return stack2;
 			}
 		}
-		return stack3;
+		for (Disc d: s3) {
+			if (d.getSize() == size) {
+				return stack3;
+			}
+		}
+		return null;	//error
 		
 	}
 	
@@ -125,11 +152,6 @@ public class HanoiSolver {
 	public void moveDiscs(Stack<Disc> fromStack, Stack<Disc> toStack, Stack<Disc> thirdStack, int discs) {
 		if (discs == 1) {
 			move(fromStack, toStack);
-		}
-		else if (discs == 2) {
-			move(fromStack, thirdStack);
-			move(fromStack, toStack);
-			move(thirdStack, toStack);
 		} else {
 			moveDiscs(fromStack, thirdStack, toStack, discs-1);
 			moveDiscs(fromStack, toStack, thirdStack, 1);
