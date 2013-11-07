@@ -94,15 +94,15 @@ public class HanoiSolver {
 	
 	private Stack<Disc> getUnusedStack(Stack<Disc> fromStack, Stack<Disc> toStack) {
 		resetFlags();
-		if (fromStack.equals(stack1) || toStack.equals(stack1)) {
+		if (fromStack == stack1 || toStack == stack1) {
 			stack1_used = true;
 		}
 		
-		if (fromStack.equals(stack2) || toStack.equals(stack2)) {
+		if (fromStack == stack2 || toStack == stack2) {
 			stack2_used = true;
 		}
 		
-		if (fromStack.equals(stack3) || toStack.equals(stack3)) {
+		if (fromStack == stack3 || toStack == stack3) {
 			stack3_used = true;
 		}
 		
