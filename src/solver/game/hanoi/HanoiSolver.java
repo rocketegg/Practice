@@ -30,11 +30,43 @@ public class HanoiSolver {
 		System.out.println("Solving... ");
 		
 		int maxDiscs = findMaxDisc();
+		System.out.print("Final Destination: "); printStackNum(destination);
+		
+		/** Find the suggested ordering of stacks to move n discs to based on the configuration **/
+		for (int i = maxDiscs; i >= 1; i--) {
+			Stack<Disc> tempDest = findDestinationStack(destination, i, maxDiscs);
+			System.out.print("Destination for: " + i + "  =>"); printStackNum(tempDest);
+		}
+		
+		/** Starting with disc 1, move the disc to the suggested stack **/
+		
+		//----------------------
+		/*
+		Stack<Disc> nminus1 = findStack(maxDiscs-1);
+		if (nminus1 != getUnusedStack(findStack(maxDiscs), destination)) {
+			Stack<Disc> newdest = getUnusedStack(nminus1, getUnusedStack(findStack(maxDiscs), destination));
+			solve(newdest, maxDiscs-2);
+		} else {
+			solve(nminus1, maxDiscs-2);
+		}
 		
 		if (findStack(maxDiscs) != destination) {	//ensure that the n-1 stack is moved to the nondestination stack to free the biggest disc to move to the destination stack
 			solve(getUnusedStack(findStack(maxDiscs), destination), maxDiscs-1);
 		}
-		solve(destination, maxDiscs);
+		solve(destination, maxDiscs);*/
+	}
+	
+	private Stack<Disc> findDestinationStack(Stack<Disc> previousDestination, int target, int numDiscs) {
+		//
+		if (numDiscs == target) {
+			return previousDestination;
+		}
+		Stack<Disc> nd = findStack(numDiscs-1);
+		if (nd != previousDestination) {	//you're ok to stay on this stack
+			return findDestinationStack(nd, target, numDiscs-1);
+		} else {	//otherwise you're blocking the disc below you, move to a different stack
+			return findDestinationStack(getUnusedStack(previousDestination), target, numDiscs-1);
+		}
 	}
 	
 	/**
@@ -134,15 +166,28 @@ public class HanoiSolver {
 		}
 		
 		if (stack1_used && stack2_used) {
-			System.out.println("stack 3 is unused");
+			//System.out.println("stack 3 is unused");
 			return stack3;
 		} else if (stack2_used && stack3_used) {
-			System.out.println("stack 1 is unused");
+			//System.out.println("stack 1 is unused");
 			return stack1;
 		} else {
-			System.out.println("stack 2 is unused");
+			//System.out.println("stack 2 is unused");
 			return stack2;
 		}
+	}
+	
+	private Stack<Disc> getUnusedStack(Stack<Disc> fromStack) {
+		if (fromStack == stack1) {
+			return stack2;
+		}
+		if (fromStack == stack2) {
+			return stack3;
+		}
+		if (fromStack == stack3) {
+			return stack1;
+		}
+		return null;
 	}
 	
 	private void resetFlags() {
@@ -156,6 +201,18 @@ public class HanoiSolver {
 			moveDiscs(fromStack, thirdStack, toStack, discs-1);
 			moveDiscs(fromStack, toStack, thirdStack, 1);
 			moveDiscs(thirdStack, toStack, fromStack, discs-1);
+		}
+	}
+	
+	private void printStackNum(Stack<Disc> mystack) {
+		if (mystack == stack1) {
+			System.out.println("stack 1");
+		} else if (mystack == stack2) {
+			System.out.println("stack 2");
+		} else if (mystack == stack3) {
+			System.out.println("stack 3");
+		} else {
+			System.out.println("error stack");
 		}
 	}
 	

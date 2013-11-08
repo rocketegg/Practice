@@ -38,9 +38,20 @@ public class HanoiTest extends TestCase {
 		hs.printStacks();
 	}*/
 	
-	public void testSolvee() {
-		hs.solve(s3);
+	public void testSolve() {
+		hs.solve(s1);
+		int movecount1 = hs.getMoveCount();
 		System.out.println("Move Count: " + hs.getMoveCount());
+		setUp();
+		hs.solve(s2);
+		int movecount2 = hs.getMoveCount();
+		System.out.println("Move Count: " + hs.getMoveCount());
+		setUp();
+		hs.solve(s3);
+		int movecount3 = hs.getMoveCount();
+		System.out.println("Move Count: " + hs.getMoveCount());
+		System.out.println("Move Count s1: " + movecount1 + " s2: " + movecount2 + " s3: " + movecount3);
+		System.out.println("Total Move Count: " + (movecount1 + movecount2 + movecount3));
 	}
 	
 }
