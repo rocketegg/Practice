@@ -32,12 +32,13 @@ if [ "$option" = "help" ] || [ "$option" = "" ] ; then
 	echo "    Use 'reset' to reset all files from HEAD.  (e.g. ./gitHelper.sh reset) "
 	echo "    Use 'add' to add all files unstaged for commit."
 	echo "    Use 'untracked' to add all untracked files to commit"
+	echo "    Use 'delete' to remove all deleted files to commit"
 fi
 
 #reset all files
 
 if [ "$option" = "reset" ] ; then
-	var=`git status -s | awk '/^([MA]|AM)[ ].*/{print $2}' | xargs -L1 echo `
+	var=`git status -s | awk '/^([MAD]|AM)[ ].*/{print $2}' | xargs -L1 echo `
 	if [ "$var" = "" ] ; then
 		echo "No added files to reset.  None reset from HEAD."
 	else
@@ -47,13 +48,15 @@ if [ "$option" = "reset" ] ; then
 		echo "     "
 		echo "Results: "
 		echo "======================================================"
-		var=`git status -s | awk '/^([MA]|AM)[ ].*/{print $2}' | xargs -L1 git reset HEAD -q `
+		var=`git status -s | awk '/^([MAD]|AM)[ ].*/{print $2}' | xargs -L1 git reset HEAD -q `
 		if [ "$var" != "" ] ; then 
 			echo "$var"
 		else
 			var=`git status -s | awk '/^[ ]M[ ].*/{print "Unstaged for Commit: \033[0;31m" $2 "\033[0m"}'`
 			echo "$var"
 			var=`git status -s | grep ?? | awk '{print "Untracked: \033[0;34m" $2 "\033[0m"}'`
+			echo "$var"
+			var=`git status -s | awk '/^[ ]D[ ].*/{print "Unstaged for Delete: \033[0;35m" $2 "\033[0m"}' `
 			echo "$var"
 		fi
 	fi
@@ -95,3 +98,20 @@ if [ "$option" = "untracked" ] ; then
 	fi
 fi
 
+#delete all untracked files
+if [ "$option" = "delete" ] ; then
+	var=`git status -s | awk '/^[ ]D[ ].*/{print $2}' | xargs -L1 echo`
+	if [ "$var" = "" ] ; then
+		echo "No deleted files to remove."
+	else
+		echo "DELETING the files below: "
+		echo "======================================================"
+		echo "$var"
+		echo "     "
+		echo "Results: "
+		echo "======================================================"
+		var=`git status -s | awk '/^[ ]D[ ].*/{print $2}' | xargs -L1 git rm `
+		var=`git status -s | awk '/^D[ ].*/{print "Staged for Delete: \033[0;35m" $2 "\033[0m"}' `
+		echo "$var"
+	fi
+fi
