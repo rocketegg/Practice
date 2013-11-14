@@ -317,4 +317,28 @@ public class StringUtil {
 		
 		return sentence;
 	}
+	
+	/**
+	 * Write a method that counts instances of distinct words - case insensitive.
+	 * String s = "This iS is is is a A a New Day day Day.";
+	 * @param s
+	 * @return
+	 */
+	public int countDistinct(String s) {
+	    String [] split = s.split(" ");
+	    
+	    HashMap<String, Integer> returnMap = new HashMap<String, Integer> ();
+	    for (int x = 0; x < split.length; x++) {
+	        String key = split[x].toLowerCase();
+	        if (returnMap.containsKey(key)) {
+	            Integer count = returnMap.get(key);
+	            count = count + 1;
+	            returnMap.put(key, count);
+	        } else {
+	            returnMap.put(key, new Integer(1));
+	        }
+	    }
+	    
+	    return returnMap.keySet().size();
+	}
 }
