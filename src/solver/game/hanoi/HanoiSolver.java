@@ -31,14 +31,21 @@ public class HanoiSolver {
 		
 		int maxDiscs = findMaxDisc();
 		System.out.print("Final Destination: "); printStackNum(destination);
+		Stack<Stack<Disc>> tempDestStack = new Stack<Stack<Disc>>();
 		
 		/** Find the suggested ordering of stacks to move n discs to based on the configuration **/
 		for (int i = maxDiscs; i >= 1; i--) {
 			Stack<Disc> tempDest = findDestinationStack(destination, i, maxDiscs);
+			tempDestStack.push(tempDest);
 			System.out.print("Destination for: " + i + "  =>"); printStackNum(tempDest);
 		}
 		
 		/** Starting with disc 1, move the disc to the suggested stack **/
+		int count = 1;
+		while (!tempDestStack.empty()) {
+			solve(tempDestStack.pop(),count);
+			count++;
+		}
 		
 		//----------------------
 		/*
@@ -63,9 +70,9 @@ public class HanoiSolver {
 		}
 		Stack<Disc> nd = findStack(numDiscs-1);
 		if (nd != previousDestination) {	//you're ok to stay on this stack
-			return findDestinationStack(nd, target, numDiscs-1);
+			return findDestinationStack(getUnusedStack(nd, previousDestination), target, numDiscs-1);
 		} else {	//otherwise you're blocking the disc below you, move to a different stack
-			return findDestinationStack(getUnusedStack(previousDestination), target, numDiscs-1);
+			return findDestinationStack(nd, target, numDiscs-1);
 		}
 	}
 	

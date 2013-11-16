@@ -66,4 +66,39 @@ public class TestUtils {
 		return s;
 	}
 	
+	/**
+	 * Generates an array of size k of unique values from 0 to range
+	 * 	Range must be > k
+	 * @param range
+	 * @param k
+	 * @return
+	 * @throws Exception 
+	 */
+	public static Integer [] randomUniqueArray(int range, int k) throws Exception {
+		if (range < k) throw new Exception();
+		
+		Integer [] returnArray = new Integer [range];
+		for (int i = 0; i < range; i++) {
+			returnArray[i] = i;
+		}
+		
+		int l = 0;
+		int r = 0;
+		int temp = 0;
+		for (int i = 0; i < range; i++) {
+			l = randomInt(0, range);
+			r = randomInt(0, range);
+			temp = returnArray[l];
+			returnArray[l] = returnArray[r];
+			returnArray[r] = temp;
+		}
+		
+		Integer [] truncArray = new Integer[k];
+		for (int i = 0; i < k; i++) {
+			truncArray[i] = returnArray[i];
+		}
+		return truncArray;
+	}
+
+	
 }

@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.BitSet;
+
 import org.junit.Test;
 
 import junit.framework.TestCase;
@@ -7,6 +9,7 @@ import junit.framework.TestCase;
 public class TestUtilTest extends TestCase {
 
 	@Test
+	/*
 	public void testRandomInt() {
 		int low = -50;
 		int high = 50;
@@ -17,9 +20,6 @@ public class TestUtilTest extends TestCase {
 		}
 	}
 	
-	/**
-	 * 
-	 */
 	public void testRandom() {
 		int[] array = new int[6];
 		int tries = 1000000;
@@ -68,6 +68,25 @@ public class TestUtilTest extends TestCase {
 			return s - 2;
 		} else {	// 0 1 2 3 4 5 I1 I2
 			return s;
+		}
+	}*/
+	
+	public void testIntegerArray() {
+		System.out.println("TESTING INTEGER ARRAY");
+		System.out.println("===========================================");
+		int range = 10000;
+		int k = 5000;
+		try {
+			Integer [] newArray = TestUtils.randomUniqueArray(range, k);
+			BitSet b = new BitSet(k);
+			for (int i = 0; i < k; i++) {
+				assertTrue(b.get(newArray[i]) == false);
+				b.set(newArray[i]);
+			}
+			//System.out.println(b.toString());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 }
