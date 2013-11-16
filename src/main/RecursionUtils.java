@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 public class RecursionUtils {
 
 	private static int[][] combinationMatrix;
@@ -67,6 +69,40 @@ public class RecursionUtils {
 	
 	public static int getNumCallsNonDynamic() { 
 		return numCallsNonDynamic;
+	}
+	
+	/**
+	 * Returns an array list of all permutations of a string s
+	 * @param s
+	 * @return
+	 */
+	public static ArrayList<String> getAllPermutations(String s) {
+		ArrayList<String> permutations = new ArrayList<String>();
+		getPermutations(permutations,"", s);
+		return permutations;
+	}
+	
+	/**
+	 * String "abc" = permutations of ab, bc and ac
+	 * "abcd" = permutations of abc, abd, bcd
+	 * ab
+	 * ba
+	 * 
+	 * @param s
+	 * @param prefix
+	 * @return
+	 */
+	public static String getPermutations(ArrayList<String> permutations, String prefix, String suffix) {
+		if (suffix.length() == 1) {
+			//System.out.println( prefix.concat(suffix) ) ;
+			permutations.add(prefix.concat(suffix));
+		} else {
+			char [] c = suffix.toCharArray();
+			for (int x = 0; x < c.length; x++) {
+				getPermutations(permutations, prefix + c[x], suffix.substring(0, x) + suffix.substring(x+1, suffix.length()));
+			}
+		}
+		return "";
 	}
 	
 }

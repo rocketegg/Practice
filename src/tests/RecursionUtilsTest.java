@@ -1,5 +1,7 @@
 package tests;
 
+import java.util.ArrayList;
+
 import main.RecursionUtils;
 
 import org.junit.Before;
@@ -14,6 +16,7 @@ public class RecursionUtilsTest extends TestCase {
 		super.setUp();
 	}
 	
+	/*
 	@Test
 	public void testNumCombinationsDynamic() {
 		System.out.println("TESTING NUM COMBINATIONS DYNAMIC PROGRAMMING: ");
@@ -68,7 +71,15 @@ public class RecursionUtilsTest extends TestCase {
 		System.out.println("------- (101,101) -------");
 		assertTrue(RecursionUtils.getNumCombinations(101,101) == 214481126);
 		System.out.println("Total calls: " + RecursionUtils.getNumCallsNonDynamic());
-	}
+	}*/
 
+	public void testStringPermutations() { 
+		String s = "abcdefg";
+		System.out.println("TESTING PERMUTATIONS OF STRING: " + s);
+		ArrayList<String> p = RecursionUtils.getAllPermutations(s);
+		for (String a: p) {
+			System.out.println(a);
+		}
+	}
 
 }
