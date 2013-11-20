@@ -84,4 +84,21 @@ public class LinkedListTest extends TestCase {
 		*/
 	}
 	
+	public void testReverseRecursive() {
+		System.out.println("\n--Testing Recursive Reversal--");
+		LinkedList<Integer> three = list2.combineLists(list1);
+		System.out.println("List 3:");
+		three.print();
+		System.out.println("Reversed Once:");
+		three.reverseRecursive().print();
+		three.reverseRecursive().print();
+		//three.print();
+		/*System.out.println("Reversed Twice More (should be same):");
+		three.reverseIterative().reverseIterative().print();
+		three.print();
+		System.out.println("Reversing once more for good measure:");
+		three.reverseIterative().print();
+		*/
+	}
+	
 }

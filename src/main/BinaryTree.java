@@ -2,6 +2,8 @@ package main;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class BinaryTree {
 
@@ -98,5 +100,42 @@ public class BinaryTree {
 		if (left < right)
 			return right;
 		return left;
+	}
+	
+	/**
+	 * Prints levels of the binary tree.  Uses a BinaryTreeTuple which
+	 * contains a BinaryTree and an int representing the "level" in the master tree
+	 * 
+	 * This algorithm basically follows BFS
+	 */
+	public void printLevels() {
+		ConcurrentLinkedQueue<BinaryTreeTuple> q = new ConcurrentLinkedQueue<BinaryTreeTuple>(); 
+		if (root != null) {
+			q.add(new BinaryTreeTuple(this, 1));
+			int prevLevel = 1;
+			while (!q.isEmpty()) {
+				BinaryTreeTuple t = q.remove();
+				BinaryTree n = t.bt;
+				if (t.level > prevLevel) {
+					System.out.print("\nLevel " + t.level + ": ");
+					prevLevel = t.level;
+				} 
+				System.out.print(n.root + " ");
+				if (n.left != null)
+					q.add(new BinaryTreeTuple(n.left, t.level + 1));
+				if (n.right != null)
+					q.add(new BinaryTreeTuple(n.right, t.level + 1));
+			}
+		}
+	}
+	
+	private class BinaryTreeTuple {
+		public BinaryTree bt;
+		public int level;
+		
+		public BinaryTreeTuple(BinaryTree bt, int level) {
+			this.bt = bt;
+			this.level = level;
+		}
 	}
 }

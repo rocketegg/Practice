@@ -119,6 +119,7 @@ public class LinkedList <T> {
 				}
 			} 
 		}
+
 		return new LinkedList<T>(ret);
 	}
 	
@@ -149,6 +150,24 @@ public class LinkedList <T> {
 			return returnVal;
 		}
 		
+	}
+	
+	/**
+	 * Reverses a linked list recursively
+	 * @return
+	 */
+	public LinkedList<T> reverseRecursive() {
+		reverseRecursive(null, this.head);
+		return new LinkedList<T>(this.head);
+	}
+	
+	private void reverseRecursive(Node<T> prev, Node<T> curr) {
+		if (curr == null) {
+			this.head = prev;
+		} else {
+			reverseRecursive(curr, curr.next);
+			curr.next = prev;
+		}
 	}
 	
 }
