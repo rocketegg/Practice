@@ -59,6 +59,11 @@ public class StringUtil {
 		
 	}
 	
+	/**
+	 * Also same as reverse string
+	 * @param s
+	 * @return
+	 */
 	private static String reverseWord(String s) {
 		char[]c = s.toCharArray();
 		for (int x = 0; x < c.length/2; x++) {

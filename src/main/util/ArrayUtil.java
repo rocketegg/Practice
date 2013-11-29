@@ -217,8 +217,83 @@ public class ArrayUtil {
 				int temp = list[i+k*n];
 				list[i+k*n] = list[list.length-n+i];
 				list[list.length-n+i] = temp;
-	
 			}
 		}
+	}
+	
+	/**
+	 * Rotates an array by n positions
+	 * @param list
+	 * @param n
+	 * @return
+	 */
+	public static void rotateArray(Character [] list, int k) {
+
+		int n = k % list.length;
+		int fromPos;
+		char temp;
+		if (n > list.length / 2)
+			fromPos = list.length - n;
+		else 
+			fromPos = 0;
+		temp = list[fromPos];
+		char temp2 = 'z';
+		for (int count = 0; count < list.length; count++) {
+			int toPos = n + fromPos;
+				toPos = (toPos > list.length - 1) ? toPos - list.length : toPos;
+			if (count != 0 && list[toPos] == temp2) {
+				toPos += 1;
+				fromPos = toPos;
+				count --;
+				temp = list[fromPos];
+			} else {
+				temp2 = list[toPos];
+				list[toPos] = temp;
+				fromPos = toPos;
+				temp = temp2;
+			}
+		}
+	}
+	
+	/**
+	 * Reverses an array (Same implementation as string reversal
+	 * @param list
+	 */
+	public static void reverseArray(Character [] list) {
+		reverseArrayFromToPosition(list, 0, list.length - 1);
+	}
+	
+	public static void reverseArrayFromToPosition(Character [] list, int fromPos, int toPos) {
+		//System.out.println("from Pos: " + fromPos + " to Pos" + toPos);
+		int numIterations = (int) Math.ceil((toPos - fromPos) / 2.0);
+		for (int x = fromPos; x < fromPos+numIterations; x++) {
+			char temp = list[x];
+			list[x] = list[toPos+fromPos-x];
+			list[toPos+fromPos-x] = temp;
+		}
+	}
+	
+	/**
+	 * Rotates array using classic three reversals
+	 * @param list
+	 * @param k
+	 */
+	public static void rotateArrayReversal(Character [] list, int k) {
+		int n = k % list.length;
+		reverseArrayFromToPosition(list, 0, list.length - 1);
+		reverseArrayFromToPosition(list, 0, n-1);
+		reverseArrayFromToPosition(list, n, list.length - 1);
+	}
+	
+	public static boolean areEqual(Character [] list1, Character [] list2) {
+		if (list1.length != list2.length)
+			return false;
+		for (int x = 0; x < list1.length; x++) {
+			if (list1[x] != list2[x]) {
+				System.out.println(x + ": list1: " + list1[x] + " list2: " + list2[x]);
+				return false;
+			}
+		}
+		return true;
 	}
 }

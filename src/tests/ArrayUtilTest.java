@@ -6,8 +6,8 @@ import main.util.ArrayUtil;
 import org.junit.Before;
 
 public class ArrayUtilTest extends TestCase {
-	Integer [] array = new Integer[15];
-	Integer [] array2 = new Integer[15];
+	Integer [] array = new Integer[10];
+	Integer [] array2 = new Integer[10];
 	@Before
 	public void setUp() {
 		for (int x = 0; x < array.length; x++) {
@@ -74,12 +74,31 @@ public class ArrayUtilTest extends TestCase {
 	}*/
 	
 	public void testRotate() {
-		array2 = ArrayUtil.mergeSort(array2);
-		ArrayUtil.printArray(array2);
-		ArrayUtil.rotateArray(array2, 5);
-		ArrayUtil.printArray(array2);
-		ArrayUtil.rotateArray(array2, 1);
-		ArrayUtil.printArray(array2);
+
+		for (int i = 0; i < 100; i++) {
+		for (int x = 2; x < 26; x++) {
+			Character [] array1 = new Character[x];
+			Character [] array2 = new Character[x];
+			for (int y = 0; y < array1.length; y++) {
+				array1[y] = (char) ((int)'a' + (y % 26));
+				array2[y] = (char) ((int)'a' + (y % 26));
+			}
+			
+			int z = TestUtils.randomInt(0, array1.length*2);
+				System.out.print("Rotating array [" + z + "] positions.  \nExpect: \t");
+				ArrayUtil.rotateArrayReversal(array1, z);
+				ArrayUtil.printArray(array1);
+				ArrayUtil.rotateArray(array2, z);
+				System.out.print("Got: \t\t");
+				ArrayUtil.printArray(array2);
+				if (ArrayUtil.areEqual(array1, array2)) {
+					System.out.println("OK");
+				} else {
+					System.out.println("ERROR");
+				}
+		}
+		}
+		
 	}
 	
 }
