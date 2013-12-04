@@ -1,6 +1,7 @@
 package main.util;
 
 import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.Stack;
 
 public class StringUtil {
@@ -341,4 +342,38 @@ public class StringUtil {
 	    
 	    return returnMap.keySet().size();
 	}
+	
+	/**
+	 * Computes whether string b is an anagram of string a (or vice versa)
+	 * @param a
+	 * @param b
+	 * @return
+	 */
+	public static boolean isAnagram(String a, String b) {
+		HashMap<Character, Integer> a_count = new HashMap<Character, Integer>();
+		for (Character c: a.toCharArray()) {
+			if (a_count.containsKey(c)) {
+				Integer count = a_count.get(c);
+				a_count.put(c, count+1);
+			} else {
+				a_count.put(c, new Integer(1));
+			}
+		}
+		for (Character d: b.toCharArray()) {
+			if (a_count.containsKey(d)) {
+				Integer count = a_count.get(d);
+				a_count.put(d, count-1);
+			} else {
+				return false;
+			}
+		}
+		for (Entry<Character, Integer> entry: a_count.entrySet()) {
+			if (entry.getValue() != 0) {
+				return false;
+			}
+		}
+		return true;
+
+	}
+	
 }

@@ -167,6 +167,7 @@ public class StringUtilTest extends TestCase {
 		System.out.println(s + " is valid? " + StringUtil.isValidWord(s, letters.toCharArray()));
 	}*/
 	
+	/*
 	public void testValidSentence() {
 		HashMap<String, Boolean> dictionary = new HashMap<String, Boolean>();
 		dictionary.put("the", true);
@@ -188,6 +189,14 @@ public class StringUtilTest extends TestCase {
 		String sentence = "thehappydogwenttotheparkonasunnyday";
 		
 		System.out.println(sentence + " Reconstructed: " + StringUtil.reconstructSentence(sentence, dictionary));
+	}
+	*/
+	
+	public void testAnagram() {
+		String a = "a";
+		String b = "b";
+		
+		System.out.println(StringUtil.isAnagram(a, b));
 	}
 	
 }
