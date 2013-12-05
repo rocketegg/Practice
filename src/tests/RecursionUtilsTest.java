@@ -2,7 +2,7 @@ package tests;
 
 import java.util.ArrayList;
 
-import main.RecursionUtils;
+import main.util.RecursionUtils;
 
 import org.junit.Before;
 import org.junit.Test;

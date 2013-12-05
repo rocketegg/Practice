@@ -1,6 +1,6 @@
 package tests;
 
-import main.util.Stack;
+import main.adt.Stack;
 
 import org.junit.Before;
 

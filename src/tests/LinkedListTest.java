@@ -3,8 +3,8 @@ package tests;
 import org.junit.Before;
 
 import junit.framework.TestCase;
-import main.util.LinkedList;
-import main.util.Node;
+import main.adt.LinkedList;
+import main.adt.element.Node;
 
 public class LinkedListTest extends TestCase {
 

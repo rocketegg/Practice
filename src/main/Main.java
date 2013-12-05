@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
+import main.adt.BinaryTree;
+
 import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import solver.game.peg.PegGrid;
@@ -143,6 +145,9 @@ public class Main {
 		b.preOrder();
 		System.out.println("Num nodes: " + b.countNodes());
 		System.out.println("Num levels: " + b.countLevels());
+		
+		b.printLevels();
+		
 		//System.out.println("Is valid tree?" + b.isValidBinaryTree());
 		//b.printTree();
 		/*
