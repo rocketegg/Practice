@@ -66,4 +66,13 @@ public class NaryTreeTest extends TestCase {
 		myTree.printTree(0);
 	}
 	
+	@Test
+	public void testTreePreOrder() {
+		System.out.println("1 - PREORDER TRAVERSAL =============================");
+		myTree.printTreePreOrder();
+		
+		System.out.println("1 - SUM CHILDREN TRAVERSAL =============================");
+		myTree.printSumTotals();
+	}
+	
 }

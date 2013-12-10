@@ -83,4 +83,18 @@ public class NaryTree<T> {
 		} 
 	}
 	
+	/**
+	 * Prints tree in pre order notation
+	 */
+	public void printTreePreOrder() {
+		root.printPreorder();
+	}
+	
+	/**
+	 * Prints tree but with sum of children
+	 */
+	public void printSumTotals() {
+		root.printSumValues();
+	}
+	
 }

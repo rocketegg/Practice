@@ -175,7 +175,7 @@ public class ArrayUtil {
 	}
 	
 	/**
-	 * A famous problem that returns the maximum subarray (continguous elements)
+	 * A famous problem that returns the maximum subarray (contiguous elements)
 	 * in an array 
 	 *  	- solved using Kadane's algorithm
 	 * @param list

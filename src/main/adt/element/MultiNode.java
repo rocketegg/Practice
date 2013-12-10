@@ -24,7 +24,67 @@ public class MultiNode<T> {
 		return t;
 	}
 	
+	/*
+	 * Traversals
+	 */
+	
+	/**
+	 * Visits each node in preorder traversal 
+	 */
+	public void printPreorder() {
+		printPreorderOffset(0);
+	}
+	
+	private void printPreorderOffset(int offset) {
+		for (int x = 0; x < offset; x++)
+			System.out.print("  ");
+		print();
+		if (leaves.size() != 0) {
+			for (MultiNode<T> leaf: leaves) {
+				leaf.printPreorderOffset(offset+1);
+			}
+		}
+	}
+	
+	public void printSumValues() {
+		sumUpValuesOffset(0);
+	}
+	
+	/**
+	 * Prints the sum of children in preorder format
+	 * @param offset
+	 */
+	private void sumUpValuesOffset(int offset) {
+		for (int x = 0; x < offset; x++)
+			System.out.print("  ");
+		System.out.println(sumUpValuesOfChildrenPostOrder());
+		if (leaves.size() != 0) {
+			for (MultiNode<T> leaf: leaves) {
+				leaf.sumUpValuesOffset(offset+1);
+			}
+		}
+	}
+	
+	/**
+	 * Visits each node in postorder traversal to sum up
+	 * value in subtrees and prints structure
+	 */
+	private Integer sumUpValuesOfChildrenPostOrder() {
+		Integer total = (Integer)t;
+		if (leaves.size() != 0) {
+			for (MultiNode<T> leaf: leaves) {
+				Integer leafValue = leaf.sumUpValuesOfChildrenPostOrder();
+				total += leafValue;
+			}
+		}
+		return total;
+	}
+	
 	public void addLeaf(MultiNode<T> insert) {
 		leaves.add(insert);
+	}
+	
+	public void print() {
+		System.out.println(t);
 	}
 }

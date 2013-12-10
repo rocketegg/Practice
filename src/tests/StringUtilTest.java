@@ -3,6 +3,7 @@ package tests;
 
 import java.util.HashMap;
 
+import main.adt.element.Tuple;
 import main.util.StringUtil;
 
 import org.junit.Before;
@@ -197,6 +198,12 @@ public class StringUtilTest extends TestCase {
 		String b = "b";
 		
 		System.out.println(StringUtil.isAnagram(a, b));
+	}
+	
+	public void testCountChar() {
+		String str = "aaaaaabbbbbbbbcccddddd";
+		Tuple second = StringUtil.getSecondHighest(str);
+		System.out.println(str + ":  Tuple: " + second.toString());
 	}
 	
 }

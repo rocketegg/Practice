@@ -127,26 +127,7 @@ public class Main {
 
 		long startTime = System.currentTimeMillis();
 
-		/* 
-		 * Binary Trees
-		 */
-		BinaryTree b = new BinaryTree();
-			
-		for (int x = 0; x < 20; x++) {
-			Node n = new Node(Math.round((float) (Math.random()*100)));
-			System.out.println("inserting: " + n.value);
-			if (x == 0)
-				 b = new BinaryTree(n);
-			else{
-				b.insert(n);
-			}
-		}
 		
-		b.preOrder();
-		System.out.println("Num nodes: " + b.countNodes());
-		System.out.println("Num levels: " + b.countLevels());
-		
-		b.printLevels();
 		
 		//System.out.println("Is valid tree?" + b.isValidBinaryTree());
 		//b.printTree();

@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.Stack;
 
+import main.adt.element.Tuple;
+
 public class StringUtil {
 
 	
@@ -381,4 +383,30 @@ public class StringUtil {
 
 	}
 	
+	public static Tuple getSecondHighest(String str) {
+		Tuple first = new Tuple();
+		Tuple second = new Tuple();
+		Tuple temp = new Tuple();
+		char [] array = str.toCharArray();
+		for (int i = 0; i < array.length; i++) {
+			if (temp.ch == null || temp.ch != array[i] || 
+				i == array.length-1) {
+				if (temp.ch != null && temp.ch == array[i])
+					temp.count++;
+				if (temp.count > first.count) {
+					second = first;
+					first = temp;
+				} else if (temp.count > second.count) {
+					second = temp;
+				}
+				temp = new Tuple(array[i], 1);
+			} else {
+				temp.count++;
+			}
+		}
+		return second;
+	}
+	
 }
+
+
