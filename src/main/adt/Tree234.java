@@ -148,11 +148,11 @@ public class Tree234 extends IntDictionary {
 		  if (node.parent.keys == 1) {
 			  System.out.println("leaf, 1 parent key");
 			  assert(node.key2 != node.parent.key1);
-			  node.parent.insertLeaf(node.key2, node.key1, node.key3);
+			  node.parent.insert(node.key2, new Tree234Node(node.parent, node.key1), new Tree234Node(node.parent, node.key3));
 			  return node.parent;
 		  } else if (node.parent.keys == 2) {
 			  System.out.println("leaf, 2 parent keys");
-			  node.parent.insertLeaf(node.key2, node.key1, node.key3);
+			  node.parent.insert(node.key2, new Tree234Node(node.parent, node.key1), new Tree234Node(node.parent, node.key3));
 			  return getParentChild(node.parent, key);
 		  }
 		  throw new Exception();
@@ -197,38 +197,14 @@ public class Tree234 extends IntDictionary {
 		  assert(!node.isLeaf());
 		  Tree234Node newleft = splitNode(node.parent, node, true);
 		  Tree234Node newright = splitNode(node.parent, node, false);
-
-		  if (node.key2 < node.parent.key1) {
-			  node.parent.insert(node.key2);
-			  node.parent.child3 = node.parent.child2;
-			  node.parent.child2 = newright;
-			  node.parent.child1 = newleft;
-		  } else {
-			  node.parent.insert(node.key2);
-			  node.parent.child2 = newleft;
-			  node.parent.child3 = newright;
-		  }
+		  node.parent.insert(node.key2, newleft, newright);
 		  return node.parent;
 	  } else {
 		  System.out.println("non-leaf, 2 parent keys.");
 		  assert(!node.isLeaf() && node.parent.keys == 2);
 		  Tree234Node newleft = splitNode(node.parent, node, true);
 		  Tree234Node newright = splitNode(node.parent, node, false);
-		  if (node.key2 < node.parent.key1 && node.key2 < node.parent.key2) {		//less than both
-			  node.parent.insert(node.key2);
-			  node.parent.child4 = node.parent.child3;
-			  node.parent.child3 = node.parent.child2;
-			  node.parent.child2 = newright;
-			  node.parent.child1 = newleft;
-		  } else if (node.key2 > node.parent.key1 && node.key2 < node.parent.key2) {//middle
-			  node.parent.insert(node.key2);
-			  node.parent.child4 = node.parent.child3;
-			  node.parent.child3 = newright;
-			  node.parent.child2 = newleft;
-		  } else {																	//greater than both
-			  node.parent.child3 = newleft;
-			  node.parent.child4 = newright;
-		  }
+		  node.parent.insert(node.key2, newleft, newright);
 		  return getParentChild(node.parent, key); 
 	  }
   }

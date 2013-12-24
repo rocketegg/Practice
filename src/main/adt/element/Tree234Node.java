@@ -40,7 +40,7 @@ public class Tree234Node {
   }
   
   public boolean isLeaf() {
-	  return child1 == null;	
+	  return child1 == null && child2 == null && child3 == null && child4 == null;	
   }
   
   public void insert(int key) {
@@ -78,34 +78,34 @@ public class Tree234Node {
 	  }
   }
   
-  public void insertLeaf(int newkey, int key1, int key3) {
+  public void insert(int newkey, Tree234Node newleft, Tree234Node newright) {
 	  if (this.keys == 1) {
 		  if (newkey < this.key1) {
 			  insert(newkey);
 			  child3 = child2;
-			  child1 = new Tree234Node(this, key1);
-			  child2 = new Tree234Node(this, key3);
+			  child2 = newright;
+			  child1 = newleft;
 		  } else {
 			  insert(newkey);
-			  child2 = new Tree234Node(this, key1);
-			  child3 = new Tree234Node(this, key3);
+			  child3 = newright;
+			  child2 = newleft;
 		  }
 	  } else if (this.keys == 2) {
-		  if (newkey > this.key1 && newkey < this.key2) {			//in the middle
-			  insert(newkey);
-			  child4 = child3;
-			  child2 = new Tree234Node(this, key1);
-			  child3 = new Tree234Node(this, key3);
-		  } else if (newkey < this.key1 && newkey < this.key2) {	//less than both
+		  if (newkey < this.key1 && newkey < this.key2) {		//less than both
 			  insert(newkey);
 			  child4 = child3;
 			  child3 = child2;
-			  child1 = new Tree234Node(this, key1);
-			  child2 = new Tree234Node(this, key3);
-		  } else if (newkey > this.key1 && newkey > this.key2) {	//greater than both
+			  child2 = newright;
+			  child1 = newleft;
+		  } else if (newkey > this.key1 && newkey < this.key2) {//middle
 			  insert(newkey);
-			  child3 = new Tree234Node(this, key1);
-			  child4 = new Tree234Node(this, key3);
+			  child4 = child3;
+			  child3 = newright;
+			  child2 = newleft;
+		  } else { //greater than both
+			  insert(newkey);
+			  child4 = newright;
+			  child3 = newleft;
 		  }
 	  }
   }
