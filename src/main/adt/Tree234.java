@@ -148,45 +148,35 @@ public class Tree234 extends IntDictionary {
 		  if (node.parent.keys == 1) {
 			  System.out.println("leaf, 1 parent key");
 			  assert(node.key2 != node.parent.key1);
-			  if (node.key2 > node.parent.key1){
-				  node.parent.insert(node.key2);
-				  node.parent.child2 = new Tree234Node(node.parent, node.key1);
-				  node.parent.child3 = new Tree234Node(node.parent, node.key3);
-			  } else {
-				  node.parent.insert(node.key2);
-				  Tree234Node temp = node.parent.child2;
-				  node.parent.child1 = new Tree234Node(node.parent, node.key1);
-				  node.parent.child2 = new Tree234Node(node.parent, node.key3);
-				  node.parent.child3 = temp;
-			  }
+			  node.parent.insertLeaf(node.key2, node.key1, node.key3);
 			  return node.parent;
 		  } else if (node.parent.keys == 2) {
 			  System.out.println("leaf, 2 parent keys");
-			  if (node.key2 > node.parent.key1 && node.key2 < node.parent.key2) {			//in the middle
-				  node.parent.insert(node.key2);
-				  Tree234Node temp = node.parent.child3;
-				  node.parent.child2 = new Tree234Node(node.parent, node.key1);
-				  node.parent.child3 = new Tree234Node(node.parent, node.key3);
-				  node.parent.child4 = temp;
-				  return getParentChild(node.parent, key);
-			  } else if (node.key2 < node.parent.key1 && node.key2 < node.parent.key2) {	//less than both
-				  node.parent.insert(node.key2);
-				  node.parent.child4 = node.parent.child3;
-				  node.parent.child3 = node.parent.child2;
-				  node.parent.child1 = new Tree234Node(node.parent, node.key1);
-				  node.parent.child2 = new Tree234Node(node.parent, node.key3);
-				  return getParentChild(node.parent, key);
-			  } else if (node.key2 > node.parent.key1 && node.key2 > node.parent.key2) {	//greater than both
-				  node.parent.insert(node.key2);
-				  node.parent.child3 = new Tree234Node(node.parent, node.key1);
-				  node.parent.child4 = new Tree234Node(node.parent, node.key3);
-				  return getParentChild(node.parent, key);
-			  } else {
-				  throw new Exception();
-			  }
-		  } else {
-			  throw new Exception();
+			  node.parent.insertLeaf(node.key2, node.key1, node.key3);
+			  return getParentChild(node.parent, key);
 		  }
+		  throw new Exception();
+	  }
+  }
+  
+  /*
+   * Takes a new node and splits the old node (either left or right) and sets the children of the old node to the new node
+   */
+  private Tree234Node splitNode(Tree234Node newparent, Tree234Node oldnode, boolean left) {
+	  if (left) {
+		  Tree234Node newleft = new Tree234Node(newparent, oldnode.key1);
+		  newleft.child1 = oldnode.child1;
+		  newleft.child2 = oldnode.child2;
+		  oldnode.child1.parent = newleft;
+		  oldnode.child2.parent = newleft;
+		  return newleft;
+	  } else {
+		  Tree234Node newright = new Tree234Node(newparent, oldnode.key3);
+		  newright.child1 = oldnode.child3;
+		  newright.child2 = oldnode.child4;
+		  oldnode.child3.parent = newright;
+		  oldnode.child4.parent = newright;
+		  return newright;
 	  }
   }
   
@@ -194,16 +184,8 @@ public class Tree234 extends IntDictionary {
 	  if (node.parent == null) {	//root is non-leaf
 		  assert(!node.isLeaf());
 		  System.out.println("non-leaf, no parent");
-		  Tree234Node newleft = new Tree234Node(null, node.key1);
-		  Tree234Node newright = new Tree234Node(null, node.key3);
-		  newleft.child1 = root.child1;
-		  root.child1.parent = newleft;
-		  newleft.child2 = root.child2;
-		  root.child2.parent = newleft;
-		  newright.child1 = root.child3;
-		  root.child3.parent = newright;
-		  newright.child2 = root.child4;
-		  root.child4.parent = newright;
+		  Tree234Node newleft = splitNode(null, root, true);
+		  Tree234Node newright = splitNode(null, root, false);
 		  root = new Tree234Node(null, node.key2);
 		  root.child1 = newleft;
 		  newleft.parent = root;
@@ -213,16 +195,9 @@ public class Tree234 extends IntDictionary {
 	  } else if (node.parent.keys == 1) {	//parent has 1 key
 		  System.out.println("non-leaf, 1 parent key");
 		  assert(!node.isLeaf());
-		  Tree234Node newleft = new Tree234Node(node.parent, node.key1);
-		  Tree234Node newright = new Tree234Node(node.parent, node.key3);
-		  newleft.child1 = node.child1;
-		  node.child1.parent = newleft;
-		  newleft.child2 = node.child2;
-		  node.child2.parent = newleft;
-		  newright.child1 = node.child3;
-		  node.child3.parent = newright;
-		  newright.child2 = node.child4;
-		  node.child4.parent = newright;
+		  Tree234Node newleft = splitNode(node.parent, node, true);
+		  Tree234Node newright = splitNode(node.parent, node, false);
+
 		  if (node.key2 < node.parent.key1) {
 			  node.parent.insert(node.key2);
 			  node.parent.child3 = node.parent.child2;
@@ -231,25 +206,15 @@ public class Tree234 extends IntDictionary {
 		  } else {
 			  node.parent.insert(node.key2);
 			  node.parent.child2 = newleft;
-			  //newleft.parent = node.parent;
 			  node.parent.child3 = newright;
-			  //newright.parent = node.parent;
 		  }
 		  return node.parent;
 	  } else {
 		  System.out.println("non-leaf, 2 parent keys.");
 		  assert(!node.isLeaf() && node.parent.keys == 2);
-		  Tree234Node newleft = new Tree234Node(node.parent, node.key1);
-		  Tree234Node newright = new Tree234Node(node.parent, node.key3);
-		  newleft.child1 = node.child1;
-		  node.child1.parent = newleft;
-		  newleft.child2 = node.child2;
-		  node.child2.parent = newleft;
-		  newright.child1 = node.child3;
-		  node.child3.parent = newright;
-		  newright.child2 = node.child4;
-		  node.child4.parent = newright;
-		  if (node.key2 < node.parent.key1 && node.key2 < node.parent.key2) {//less than both
+		  Tree234Node newleft = splitNode(node.parent, node, true);
+		  Tree234Node newright = splitNode(node.parent, node, false);
+		  if (node.key2 < node.parent.key1 && node.key2 < node.parent.key2) {		//less than both
 			  node.parent.insert(node.key2);
 			  node.parent.child4 = node.parent.child3;
 			  node.parent.child3 = node.parent.child2;
@@ -260,7 +225,7 @@ public class Tree234 extends IntDictionary {
 			  node.parent.child4 = node.parent.child3;
 			  node.parent.child3 = newright;
 			  node.parent.child2 = newleft;
-		  } else {	//greater than both
+		  } else {																	//greater than both
 			  node.parent.child3 = newleft;
 			  node.parent.child4 = newright;
 		  }

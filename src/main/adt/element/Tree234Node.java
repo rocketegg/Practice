@@ -27,6 +27,7 @@ public class Tree234Node {
   public Tree234Node child2;
   public Tree234Node child3;
   public Tree234Node child4;
+  
 
   public Tree234Node(Tree234Node p, int key) {
     keys = 1;
@@ -76,7 +77,39 @@ public class Tree234Node {
 		  }
 	  }
   }
-
+  
+  public void insertLeaf(int newkey, int key1, int key3) {
+	  if (this.keys == 1) {
+		  if (newkey < this.key1) {
+			  insert(newkey);
+			  child3 = child2;
+			  child1 = new Tree234Node(this, key1);
+			  child2 = new Tree234Node(this, key3);
+		  } else {
+			  insert(newkey);
+			  child2 = new Tree234Node(this, key1);
+			  child3 = new Tree234Node(this, key3);
+		  }
+	  } else if (this.keys == 2) {
+		  if (newkey > this.key1 && newkey < this.key2) {			//in the middle
+			  insert(newkey);
+			  child4 = child3;
+			  child2 = new Tree234Node(this, key1);
+			  child3 = new Tree234Node(this, key3);
+		  } else if (newkey < this.key1 && newkey < this.key2) {	//less than both
+			  insert(newkey);
+			  child4 = child3;
+			  child3 = child2;
+			  child1 = new Tree234Node(this, key1);
+			  child2 = new Tree234Node(this, key3);
+		  } else if (newkey > this.key1 && newkey > this.key2) {	//greater than both
+			  insert(newkey);
+			  child3 = new Tree234Node(this, key1);
+			  child4 = new Tree234Node(this, key3);
+		  }
+	  }
+  }
+  
   /**
    *  toString() recursively prints this Tree234Node and its descendants as
    *  a String.  Each node is printed in the form such as (for a 3-key node)
