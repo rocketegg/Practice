@@ -10,6 +10,11 @@ public class ArrayUtilTest extends TestCase {
 	Integer [] array2 = new Integer[10];
 	@Before
 	public void setUp() {
+		char a = 'a';
+		char what = (char) (a + 1);
+		System.out.println("what is:" + what);
+		
+		
 		for (int x = 0; x < array.length; x++) {
 			//array[x] = array.length- 1 -x;
 			array[x] = TestUtils.randomInt(0, 50);
@@ -20,6 +25,11 @@ public class ArrayUtilTest extends TestCase {
 		}
 		//array2[5]=9;
 	}
+	
+	public void testBlah() {
+		//blah
+	}
+	
 	/*
 	public void testDouble() {
 		//ArrayUtil.printArray(array);
@@ -73,7 +83,7 @@ public class ArrayUtilTest extends TestCase {
 		
 	}*/
 	
-	public void testRotate() {
+	/* public void testRotate() {
 
 		for (int i = 0; i < 100; i++) {
 		for (int x = 2; x < 26; x++) {
@@ -100,5 +110,6 @@ public class ArrayUtilTest extends TestCase {
 		}
 		
 	}
+	*/
 	
 }
